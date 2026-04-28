@@ -536,6 +536,27 @@ summary {
   background: var(--surface);
   color: var(--text);
   font-weight: 900;
+  cursor: pointer;
+  transition: background-color 140ms ease, border-color 140ms ease;
+}
+
+summary:hover {
+  background: var(--surface-2);
+}
+
+details > :not(summary) {
+  animation: expandIn 140ms ease-out;
+}
+
+@keyframes expandIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .settings-screen > details > summary {
@@ -607,6 +628,52 @@ summary {
 .quantity-list {
   display: grid;
   gap: 8px;
+}
+
+.promo-config-card {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface-2);
+  overflow: visible;
+}
+
+.promo-config-summary {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  align-items: center;
+  padding: 12px;
+  background: var(--surface);
+}
+
+.promo-config-summary span {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.promo-config-summary strong,
+.promo-config-summary small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.promo-config-summary small {
+  color: var(--muted);
+}
+
+.promo-active-toggle {
+  justify-content: end;
+  min-height: 32px;
+  white-space: nowrap;
+}
+
+.promo-config-body {
+  display: grid;
+  gap: 10px;
+  padding: 10px;
+  border-top: 1px solid var(--line);
 }
 
 .promo-config-item {

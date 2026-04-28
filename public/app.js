@@ -999,25 +999,35 @@ function renderProductEditor() {
 
 function renderPromoEditor() {
   nodes.promoEditor.innerHTML = `<div class="editor-list">${state.draft.promotions.map((promo, promoIndex) => `
-    <div class="editor-card${state.validationErrors.has(validationKey("promo", promoIndex, "items")) ? " invalid-field" : ""}">
-      <strong class="editor-title">Promocion *</strong>
-      <div class="editor-row">
-        <label class="${invalidClass("promo", promoIndex, "name")}">Nombre *<input data-promo-field="name" data-promo-index="${promoIndex}" value="${escapeHtml(promo.name)}"></label>
-        <label class="${invalidClass("promo", promoIndex, "price")}">Precio promo *<input data-promo-field="price" data-promo-index="${promoIndex}" type="number" min="0" value="${escapeHtml(promo.price)}"></label>
+    <details class="promo-config-card${state.validationErrors.has(validationKey("promo", promoIndex, "items")) ? " invalid-field" : ""}" data-promo-config>
+      <summary class="promo-config-summary">
+        <span>
+          <strong>${escapeHtml(promo.name || "Promocion sin nombre")} *</strong>
+          <small>${escapeHtml(money(promo.price))}</small>
+        </span>
+        <label class="toggle-row promo-active-toggle">
+          <input data-promo-field="active" data-promo-index="${promoIndex}" type="checkbox" ${promo.active ? "checked" : ""}>
+          Activa
+        </label>
+      </summary>
+      <div class="promo-config-body">
+        <div class="editor-row">
+          <label class="${invalidClass("promo", promoIndex, "name")}">Nombre *<input data-promo-field="name" data-promo-index="${promoIndex}" value="${escapeHtml(promo.name)}"></label>
+          <label class="${invalidClass("promo", promoIndex, "price")}">Precio promo *<input data-promo-field="price" data-promo-index="${promoIndex}" type="number" min="0" value="${escapeHtml(promo.price)}"></label>
+        </div>
+        <small class="editor-help">Agrega uno o mas items. Ej: 12 empanadas, o 1 pizza + 6 empanadas. Si no marcas gustos permitidos, se permite cualquiera.</small>
+        ${state.validationErrors.has(validationKey("promo", promoIndex, "items")) ? `<small class="field-error">La promocion necesita al menos un item.</small>` : ""}
+        <div class="promo-config-list">
+          ${(promo.items || []).map((item, itemIndex) => promoConfigItemHtml(promoIndex, itemIndex, item)).join("")}
+        </div>
+        <div class="two-buttons">
+          <button class="secondary" data-add-promo-item="empanada" data-promo-index="${promoIndex}">Item empanadas</button>
+          <button class="secondary" data-add-promo-item="pizza" data-promo-index="${promoIndex}">Item pizza</button>
+          <button class="secondary" data-add-promo-item="adicional" data-promo-index="${promoIndex}">Item adicional</button>
+        </div>
+        <button class="danger" data-remove-promo="${promoIndex}">Quitar promocion</button>
       </div>
-      <label class="toggle-row"><input data-promo-field="active" data-promo-index="${promoIndex}" type="checkbox" ${promo.active ? "checked" : ""}> Activa</label>
-      <small class="editor-help">Agrega uno o mas items. Ej: 12 empanadas, o 1 pizza + 6 empanadas. Si no marcas gustos permitidos, se permite cualquiera.</small>
-      ${state.validationErrors.has(validationKey("promo", promoIndex, "items")) ? `<small class="field-error">La promocion necesita al menos un item.</small>` : ""}
-      <div class="promo-config-list">
-        ${(promo.items || []).map((item, itemIndex) => promoConfigItemHtml(promoIndex, itemIndex, item)).join("")}
-      </div>
-      <div class="two-buttons">
-        <button class="secondary" data-add-promo-item="empanada" data-promo-index="${promoIndex}">Item empanadas</button>
-        <button class="secondary" data-add-promo-item="pizza" data-promo-index="${promoIndex}">Item pizza</button>
-        <button class="secondary" data-add-promo-item="adicional" data-promo-index="${promoIndex}">Item adicional</button>
-      </div>
-      <button class="danger" data-remove-promo="${promoIndex}">Quitar promocion</button>
-    </div>
+    </details>
   `).join("")}</div>`;
 }
 
@@ -1081,6 +1091,10 @@ function syncDraftFromInputs() {
 }
 
 document.addEventListener("click", event => {
+  if (event.target.closest(".promo-active-toggle")) {
+    event.stopPropagation();
+    if (event.target.tagName !== "INPUT") event.preventDefault();
+  }
   const target = event.target.closest("button");
   if (!target) return;
 
@@ -1294,6 +1308,11 @@ document.addEventListener("toggle", event => {
   if (id) state.collapsedCategories[id] = !event.target.open;
   if (event.target.classList?.contains("settings-section") && event.target.open) {
     $$(".settings-section").forEach(section => {
+      if (section !== event.target) section.open = false;
+    });
+  }
+  if (event.target.matches?.("[data-promo-config]") && event.target.open) {
+    $$("[data-promo-config]").forEach(section => {
       if (section !== event.target) section.open = false;
     });
   }
