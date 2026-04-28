@@ -503,7 +503,7 @@ textarea {
 
 .settings-screen {
   display: grid;
-  gap: 12px;
+  gap: 16px;
 }
 
 .settings-actions,
@@ -515,10 +515,12 @@ textarea {
 
 .settings-actions {
   position: sticky;
-  top: 78px;
+  top: 68px;
   z-index: 8;
-  padding: 8px 0;
+  margin: 0 -14px;
+  padding: 10px 14px;
   background: var(--bg);
+  border-bottom: 1px solid var(--line);
 }
 
 details {
@@ -526,6 +528,7 @@ details {
   border-radius: 8px;
   background: var(--surface);
   overflow: visible;
+  box-shadow: 0 4px 14px rgba(54, 31, 18, 0.05);
 }
 
 summary {
@@ -537,7 +540,7 @@ summary {
 
 .settings-screen > details > summary {
   position: sticky;
-  top: 136px;
+  top: 125px;
   z-index: 4;
   border-bottom: 1px solid var(--line);
 }
@@ -797,11 +800,15 @@ label.invalid-field textarea {
   }
 
   .settings-actions {
-    top: 70px;
+    top: 64px;
+    margin-right: -10px;
+    margin-left: -10px;
+    padding-right: 10px;
+    padding-left: 10px;
   }
 
   .settings-screen > details > summary {
-    top: 132px;
+    top: 120px;
   }
 
   .form-grid,

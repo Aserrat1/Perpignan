@@ -8,6 +8,7 @@ const state = {
   pizzaBuilder: { sizeId: null, splitMode: null, portions: [] },
   promoBuilder: null,
   validationErrors: new Set(),
+  dirty: false,
   cartOpen: false,
   collapsedCategories: {},
   touchStartX: 0
@@ -83,6 +84,12 @@ window.addEventListener("unhandledrejection", event => {
   showToast(event.reason?.message || "Error inesperado", "error");
 });
 
+window.addEventListener("beforeunload", event => {
+  if (!hasUnsavedChanges()) return;
+  event.preventDefault();
+  event.returnValue = "";
+});
+
 function escapeHtml(value) {
   return String(value ?? "")
     .replace(/&/g, "&amp;")
@@ -137,6 +144,20 @@ function invalidClass(...parts) {
 
 function isBlank(value) {
   return String(value ?? "").trim() === "";
+}
+
+function markDirty() {
+  state.dirty = true;
+}
+
+function hasUnsavedChanges() {
+  if (state.dirty) return true;
+  if (!state.config || !state.draft) return false;
+  return JSON.stringify(state.config) !== JSON.stringify(state.draft);
+}
+
+function confirmDiscardChanges() {
+  return !hasUnsavedChanges() || window.confirm("Tenes cambios sin guardar. ¿Salir sin guardar?");
 }
 
 function normalizeConfig(config) {
@@ -339,6 +360,7 @@ async function loadConfig() {
   if (!response.ok) throw new Error("No se pudo cargar la configuracion");
   state.config = normalizeConfig(await response.json());
   state.draft = structuredClone(state.config);
+  state.dirty = false;
   state.sortMode = state.config.settings.defaultSort || "category";
   if (!state.pizzaBuilder.sizeId) state.pizzaBuilder.sizeId = pizzaSizesForCalculator()[0]?.id || null;
   applyTheme();
@@ -363,6 +385,7 @@ async function saveConfig() {
   if (!response.ok) throw new Error("No se pudo guardar");
   state.config = normalizeConfig(await response.json());
   state.draft = structuredClone(state.config);
+  state.dirty = false;
   state.sortMode = state.config.settings.defaultSort || "category";
   if (!currentSize()) resetPizzaBuilder(state.config.pizzaSizes[0]?.id || null);
   applyTheme();
@@ -426,6 +449,7 @@ function resetPizzaBuilder(sizeId = state.pizzaBuilder.sizeId) {
 }
 
 function showScreen(screen) {
+  if (state.screen === "settings" && screen !== "settings" && !confirmDiscardChanges()) return;
   state.screen = screen;
   state.cartOpen = false;
   if (screen === "calculator" && !["pizza", "empanada", "adicional", "promo"].includes(state.tab)) state.tab = "pizza";
@@ -1102,7 +1126,7 @@ document.addEventListener("click", event => {
   if (target.id === "syncButton") loadConfig();
   if (target.id === "cartToggle") { state.cartOpen = !state.cartOpen; renderCart(); }
   if (target.id === "clearCart") { state.cart = []; renderCart(); }
-  if (target.id === "resetDraft") { state.draft = structuredClone(state.config); renderSettings(); showToast("Cambios deshechos"); }
+  if (target.id === "resetDraft") { state.draft = structuredClone(state.config); state.dirty = false; state.validationErrors = new Set(); renderSettings(); showToast("Cambios deshechos"); }
   if (target.id === "saveConfig") saveConfig();
   if (target.id === "closePromoModal") closePromoModal();
   if (target.id === "addPromoToCart") addCurrentPromoToCart();
@@ -1130,6 +1154,13 @@ document.addEventListener("click", event => {
     state.draft.promotions.push({ id: uid("promo"), name: "Nueva promo", price: 0, active: true, items: [] });
     renderPromoEditor();
   }
+  if (
+    target.dataset.removeCategory || target.dataset.removeSize || target.dataset.removeProduct ||
+    target.dataset.removePromo || target.dataset.removePromoItem || target.dataset.addPromoItem ||
+    target.id === "addPizzaCategory" || target.id === "addEmpanadaCategory" || target.id === "addAdicionalCategory" ||
+    target.id === "addSize" || target.id === "addPizza" || target.id === "addEmpanada" || target.id === "addAdicional" ||
+    target.id === "addPromo"
+  ) markDirty();
 });
 
 function addPromoPizzaPart(target) {
@@ -1158,17 +1189,23 @@ function removePromoPizzaPart(target) {
 document.addEventListener("input", event => {
   const input = event.target;
   const index = Number(input.dataset.index);
+  let changedDraft = false;
   if (input.dataset.categoryField) {
     const field = input.dataset.categoryField;
     state.draft.productCategories[index][field] = field === "sort" ? Number(input.value) : input.value;
     if (field === "type") renderProductEditor();
+    changedDraft = true;
   }
-  if (input.dataset.sizeField) state.draft.pizzaSizes[index][input.dataset.sizeField] = input.dataset.sizeField === "name" ? input.value : Number(input.value);
+  if (input.dataset.sizeField) {
+    state.draft.pizzaSizes[index][input.dataset.sizeField] = input.dataset.sizeField === "name" ? input.value : Number(input.value);
+    changedDraft = true;
+  }
   if (input.dataset.productSizePrice) {
     const product = state.draft.products[index];
     product.sizePrices ||= {};
     if (input.value === "") delete product.sizePrices[input.dataset.productSizePrice];
     else product.sizePrices[input.dataset.productSizePrice] = Number(input.value);
+    changedDraft = true;
   }
   if (input.dataset.productField) {
     const field = input.dataset.productField;
@@ -1179,30 +1216,37 @@ document.addEventListener("input", event => {
       product.categoryId = categoriesFor(product.category, state.draft)[0]?.id || "";
       renderProductEditor();
     }
+    changedDraft = true;
   }
   if (input.dataset.promoField) {
     const promo = state.draft.promotions[Number(input.dataset.promoIndex)];
     const field = input.dataset.promoField;
     promo[field] = field === "active" ? input.checked : field === "price" ? Number(input.value) : input.value;
+    changedDraft = true;
   }
   if (input.dataset.promoItemField) {
     const item = state.draft.promotions[Number(input.dataset.promoIndex)].items[Number(input.dataset.itemIndex)];
     const field = input.dataset.promoItemField;
     item[field] = field === "quantity" ? Number(input.value) : input.value || null;
-    if (field === "type") item.allowedProductIds = [];
-    renderPromoEditor();
+    if (field === "type") {
+      item.allowedProductIds = [];
+      renderPromoEditor();
+    }
+    changedDraft = true;
   }
   if (input.dataset.promoAllowed) {
     const item = state.draft.promotions[Number(input.dataset.promoIndex)].items[Number(input.dataset.itemIndex)];
     item.allowedProductIds ||= [];
     if (input.checked && !item.allowedProductIds.includes(input.dataset.promoAllowed)) item.allowedProductIds.push(input.dataset.promoAllowed);
     if (!input.checked) item.allowedProductIds = item.allowedProductIds.filter(id => id !== input.dataset.promoAllowed);
+    changedDraft = true;
   }
   if (input.dataset.promoProduct) {
     const selection = state.promoBuilder.selections[Number(input.dataset.promoItem)];
     selection.empanadas[input.dataset.promoProduct] = Number(input.value) || 0;
     renderPromoModal();
   }
+  if (changedDraft) markDirty();
 });
 
 document.addEventListener("change", event => {
@@ -1214,12 +1258,14 @@ document.addEventListener("change", event => {
   }
   if (input.id === "settingDefaultSort") {
     state.draft.settings.defaultSort = input.value;
+    markDirty();
     return;
   }
   if (input.dataset.promoSplitModes !== undefined) {
     const item = state.draft.promotions[Number(input.dataset.promoIndex)].items[Number(input.dataset.itemIndex)];
     item.splitModes = Array.from(input.selectedOptions).map(option => option.value);
     if (!item.splitModes.length) item.splitModes = [""];
+    markDirty();
     renderPromoEditor();
     return;
   }
@@ -1238,6 +1284,7 @@ document.addEventListener("change", event => {
       item.allowedProductIds = [];
       item.splitModes ||= [""];
     }
+    markDirty();
     renderPromoEditor();
   }
 });
@@ -1245,6 +1292,11 @@ document.addEventListener("change", event => {
 document.addEventListener("toggle", event => {
   const id = event.target.dataset?.categoryGroup;
   if (id) state.collapsedCategories[id] = !event.target.open;
+  if (event.target.classList?.contains("settings-section") && event.target.open) {
+    $$(".settings-section").forEach(section => {
+      if (section !== event.target) section.open = false;
+    });
+  }
 }, true);
 
 nodes.calculatorScreen.addEventListener("touchstart", event => {
