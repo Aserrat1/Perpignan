@@ -1,0 +1,228 @@
+{
+  "settings": {
+    "defaultSort": "category",
+    "theme": "light",
+    "businessName": "Perpignan",
+    "currency": "$",
+    "taxIncluded": true,
+    "allowPizzaNotes": true
+  },
+  "productCategories": [
+    {
+      "id": "empanada-clasicas",
+      "type": "empanada",
+      "name": "Clasicas",
+      "sort": 1
+    },
+    {
+      "id": "empanada-premium",
+      "type": "empanada",
+      "name": "Premium",
+      "sort": 2
+    },
+    {
+      "id": "pizza-comunes",
+      "type": "pizza",
+      "name": "Comunes",
+      "sort": 1
+    },
+    {
+      "id": "pizza-cancheras",
+      "type": "pizza",
+      "name": "Cancheras",
+      "sort": 2
+    },
+    {
+      "id": "adicional-bebidas",
+      "type": "adicional",
+      "name": "Bebidas",
+      "sort": 1
+    },
+    {
+      "id": "adicional-otros",
+      "type": "adicional",
+      "name": "Otros",
+      "sort": 2
+    }
+  ],
+  "pizzaSizes": [
+    {
+      "id": "xl",
+      "name": "XL",
+      "multiplier": 1.45
+    },
+    {
+      "id": "chica",
+      "name": "Chica",
+      "multiplier": 0.72
+    },
+    {
+      "id": "mediana",
+      "name": "Mediana",
+      "multiplier": 1
+    }
+  ],
+  "products": [
+    {
+      "id": "muzza",
+      "category": "pizza",
+      "name": "Muzzarella",
+      "description": "Salsa, muzzarella y oregano.",
+      "price": 7200,
+      "active": true,
+      "sizePrices": {},
+      "categoryId": "pizza-comunes",
+      "sort": 1
+    },
+    {
+      "id": "napo",
+      "category": "pizza",
+      "name": "Napolitana",
+      "description": "Tomate, ajo y muzzarella.",
+      "price": 8200,
+      "active": true,
+      "sizePrices": {},
+      "categoryId": "pizza-comunes",
+      "sort": 2
+    },
+    {
+      "id": "jamon-morron",
+      "category": "pizza",
+      "name": "Jamon y morron",
+      "description": "Jamon, morron y muzzarella.",
+      "price": 9000,
+      "active": true,
+      "sizePrices": {},
+      "categoryId": "pizza-comunes",
+      "sort": 3
+    },
+    {
+      "id": "fugazzeta",
+      "category": "pizza",
+      "name": "Fugazzeta",
+      "description": "Cebolla y extra muzzarella.",
+      "price": 8800,
+      "active": true,
+      "sizePrices": {},
+      "categoryId": "pizza-comunes",
+      "sort": 4
+    },
+    {
+      "id": "carne",
+      "category": "empanada",
+      "name": "Carne",
+      "description": "Carne cortada a cuchillo.",
+      "price": 900,
+      "active": true,
+      "categoryId": "empanada-clasicas",
+      "sort": 1,
+      "sizePrices": {}
+    },
+    {
+      "id": "jyq",
+      "category": "empanada",
+      "name": "Jamon y queso",
+      "description": "Jamon cocido y queso.",
+      "price": 900,
+      "active": true,
+      "categoryId": "empanada-clasicas",
+      "sort": 2,
+      "sizePrices": {}
+    },
+    {
+      "id": "pollo",
+      "category": "empanada",
+      "name": "Pollo",
+      "description": "Pollo condimentado.",
+      "price": 900,
+      "active": true,
+      "categoryId": "empanada-clasicas",
+      "sort": 3,
+      "sizePrices": {}
+    },
+    {
+      "id": "humita",
+      "category": "empanada",
+      "name": "Humita",
+      "description": "Choclo cremoso.",
+      "price": 900,
+      "active": true,
+      "categoryId": "empanada-clasicas",
+      "sort": 4,
+      "sizePrices": {}
+    },
+    {
+      "id": "pizza-0mdb9a",
+      "category": "pizza",
+      "categoryId": "pizza-cancheras",
+      "sort": 5,
+      "name": "Nuevo gusto",
+      "description": "Aca",
+      "price": 1000,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "coca-15",
+      "category": "adicional",
+      "categoryId": "adicional-bebidas",
+      "sort": 1,
+      "name": "Gaseosa 1.5L",
+      "description": "Bebida configurable.",
+      "price": 2500,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "postre-semana",
+      "category": "adicional",
+      "categoryId": "adicional-otros",
+      "sort": 1,
+      "name": "Postre semanal",
+      "description": "Articulo especial configurable.",
+      "price": 3000,
+      "active": true,
+      "sizePrices": {}
+    }
+  ],
+  "promotions": [
+    {
+      "id": "docena-empanadas",
+      "name": "Docena de empanadas",
+      "price": 9600,
+      "active": true,
+      "items": [
+        {
+          "id": "docena-empanadas-item",
+          "type": "empanada",
+          "quantity": 12,
+          "allowedProductIds": [],
+          "sizeId": "mediana",
+          "splitModes": [
+            ""
+          ]
+        },
+        {
+          "id": "promo-item-bisrun",
+          "type": "pizza",
+          "quantity": 1,
+          "allowedProductIds": [
+            "muzza"
+          ],
+          "sizeId": "mediana",
+          "splitModes": [
+            ""
+          ]
+        }
+      ]
+    },
+    {
+      "id": "promo-5f681v",
+      "name": "Nueva promo",
+      "price": 0,
+      "active": true,
+      "items": []
+    }
+  ],
+  "updatedAt": "2026-04-28T10:59:25.437Z"
+}

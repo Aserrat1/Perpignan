@@ -1,0 +1,9 @@
+{
+  "name": "Perpignan",
+  "short_name": "Perpignan",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f7f2ea",
+  "theme_color": "#b42318",
+  "icons": []
+}

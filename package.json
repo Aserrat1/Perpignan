@@ -1,0 +1,12 @@
+{
+  "name": "perpignan",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Calculadora movil para Perpignan con configuracion centralizada.",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

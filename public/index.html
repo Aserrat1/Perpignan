@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#b42318">
+    <title>Perpignan</title>
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <button class="icon-button" id="backButton" aria-label="Volver" hidden>‹</button>
+        <div>
+          <p class="eyebrow" id="appMode">Menu</p>
+          <h1 id="businessName">Perpignan</h1>
+        </div>
+        <button class="icon-button" id="syncButton" aria-label="Actualizar datos">↻</button>
+      </header>
+
+      <main>
+        <section class="home-screen" id="homeScreen">
+          <button class="choice-button" data-screen="calculator">
+            <span>Calcular</span>
+            <small>Armar pedido y ver total</small>
+          </button>
+          <button class="choice-button" data-screen="settings">
+            <span>Configurar</span>
+            <small>Gustos, precios y promociones</small>
+          </button>
+        </section>
+
+        <section class="screen" id="calculatorScreen" hidden>
+          <div class="segmented" role="tablist">
+            <button class="segment active" data-tab="pizza">Pizza</button>
+            <button class="segment" data-tab="empanada">Empanadas</button>
+            <button class="segment" data-tab="adicional">Adicionales</button>
+            <button class="segment" data-tab="promo">Promos</button>
+          </div>
+
+          <div class="builder-warning" id="builderWarning" hidden>
+            Completa la pizza actual para poder agregar otra cosa.
+          </div>
+          <div class="sort-row">
+            <label for="sortMode">Orden</label>
+            <select id="sortMode">
+              <option value="default">Default</option>
+              <option value="category">Categoria</option>
+              <option value="name">A-Z</option>
+              <option value="priceAsc">Precio menor</option>
+              <option value="priceDesc">Precio mayor</option>
+            </select>
+          </div>
+
+          <section class="tab-panel active" id="pizzaPanel">
+            <div class="pizza-controls">
+              <div>
+                <label>Tamano</label>
+                <div class="option-grid size-options" id="pizzaSizeOptions"></div>
+              </div>
+              <div>
+                <label>Division</label>
+                <div class="option-grid split-options" id="pizzaSplitOptions"></div>
+              </div>
+            </div>
+            <div class="pizza-progress" id="pizzaProgress" hidden></div>
+            <div class="taste-list" id="pizzaList"></div>
+          </section>
+
+          <section class="tab-panel" id="empanadaPanel">
+            <div class="taste-list" id="empanadaList"></div>
+          </section>
+
+          <section class="tab-panel" id="adicionalPanel">
+            <div class="taste-list" id="adicionalList"></div>
+          </section>
+
+          <section class="tab-panel" id="promoPanel">
+            <div class="promo-list" id="promoList"></div>
+          </section>
+        </section>
+
+        <section class="screen settings-screen" id="settingsScreen" hidden>
+          <div class="settings-actions">
+            <button class="primary" id="saveConfig">Guardar cambios</button>
+            <button class="secondary" id="resetDraft">Deshacer</button>
+          </div>
+
+          <details open>
+            <summary>Ajustes generales</summary>
+            <div class="form-grid">
+              <label>Nombre
+                <input id="settingBusinessName" type="text">
+              </label>
+              <label>Moneda
+                <input id="settingCurrency" type="text" maxlength="4">
+              </label>
+              <label class="toggle-row">
+                <input id="settingTheme" type="checkbox">
+                Modo oscuro
+              </label>
+              <label class="toggle-row">
+                <input id="settingPizzaNotes" type="checkbox">
+                Permitir notas en pizzas
+              </label>
+              <label>Orden default
+                <select id="settingDefaultSort">
+                  <option value="category">Categoria</option>
+                  <option value="default">Manual</option>
+                  <option value="name">A-Z</option>
+                  <option value="priceAsc">Precio menor</option>
+                  <option value="priceDesc">Precio mayor</option>
+                </select>
+              </label>
+            </div>
+          </details>
+
+          <details open>
+            <summary>Categorias</summary>
+            <div id="categoryEditor"></div>
+            <div class="two-buttons">
+              <button class="secondary" id="addPizzaCategory">Agregar categoria pizza</button>
+              <button class="secondary" id="addEmpanadaCategory">Agregar categoria empanada</button>
+              <button class="secondary" id="addAdicionalCategory">Agregar categoria adicional</button>
+            </div>
+          </details>
+
+          <details open>
+            <summary>Tamaños de pizza</summary>
+            <div id="sizeEditor"></div>
+            <button class="secondary full" id="addSize">Agregar tamaño</button>
+          </details>
+
+          <details open>
+            <summary>Gustos y productos</summary>
+            <div id="productEditor"></div>
+            <div class="two-buttons">
+              <button class="secondary" id="addPizza">Agregar pizza</button>
+              <button class="secondary" id="addEmpanada">Agregar empanada</button>
+              <button class="secondary" id="addAdicional">Agregar adicional</button>
+            </div>
+          </details>
+
+          <details open>
+            <summary>Promociones</summary>
+            <div id="promoEditor"></div>
+            <button class="secondary full" id="addPromo">Agregar promocion</button>
+          </details>
+        </section>
+      </main>
+
+      <footer class="cart-bar" id="cartBar" hidden>
+        <button class="cart-summary" id="cartToggle">
+          <span id="cartCount">Sin productos</span>
+          <strong id="cartTotal">$0</strong>
+          <span id="cartArrow">⌃</span>
+        </button>
+        <div class="cart-detail" id="cartDetail" hidden>
+          <div id="cartItems"></div>
+          <button class="danger" id="clearCart">Vaciar carrito</button>
+        </div>
+      </footer>
+    </div>
+
+    <div class="modal-backdrop" id="promoModal" hidden>
+      <section class="promo-modal">
+        <header class="modal-header">
+          <div>
+            <p class="eyebrow">Promocion</p>
+            <h2 id="promoModalTitle">Promo</h2>
+          </div>
+          <button class="icon-button" id="closePromoModal" aria-label="Cerrar">x</button>
+        </header>
+        <div id="promoModalBody"></div>
+        <footer class="modal-footer">
+          <strong id="promoModalTotal">$0</strong>
+          <button class="primary" id="addPromoToCart">Agregar promo</button>
+        </footer>
+      </section>
+    </div>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
