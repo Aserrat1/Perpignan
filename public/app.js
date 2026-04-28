@@ -11,6 +11,7 @@ const state = {
   dirty: false,
   cartOpen: false,
   collapsedCategories: {},
+  openPromoConfigId: null,
   touchStartX: 0
 };
 
@@ -128,6 +129,25 @@ function promoItemQuantity(item) {
   return Math.max(1, boundedCount(item?.quantity, 1, 50));
 }
 
+function allowedSplitModesForSize(sizeId) {
+  return sizeId === "xl" ? ["", "halves", "quarters"] : ["", "halves"];
+}
+
+function normalizeSplitModesForSize(splitModes, sizeId) {
+  const allowed = allowedSplitModesForSize(sizeId);
+  const normalized = (Array.isArray(splitModes) ? splitModes : [""]).filter(mode => allowed.includes(mode));
+  return normalized.length ? normalized : [""];
+}
+
+function promoProductTotal(selection) {
+  return Object.values(selection?.empanadas || {}).reduce((sum, value) => sum + safeQuantity(value, 0), 0);
+}
+
+function setOpenPromoFromElement(element) {
+  const promoCard = element?.closest?.("[data-promo-config]");
+  if (promoCard?.dataset?.promoId) state.openPromoConfigId = promoCard.dataset.promoId;
+}
+
 function safeArray(count, mapper) {
   const length = boundedCount(count, 0, 100);
   if (!Number.isSafeInteger(length) || length < 0) return [];
@@ -215,13 +235,15 @@ function normalizePromo(promo) {
 }
 
 function normalizePromoItem(item) {
+  const sizeId = item.sizeId || state.config?.pizzaSizes?.[0]?.id || "mediana";
   const splitModes = item.splitModes || (item.splitMode ? [item.splitMode] : [""]);
   return {
     ...item,
     type: PRODUCT_TYPES.includes(item.type) ? item.type : "empanada",
     quantity: promoItemQuantity(item),
     allowedProductIds: Array.isArray(item.allowedProductIds) ? item.allowedProductIds : [],
-    splitModes: Array.isArray(splitModes) && splitModes.length ? splitModes : [""],
+    sizeId,
+    splitModes: normalizeSplitModesForSize(Array.isArray(splitModes) && splitModes.length ? splitModes : [""], sizeId),
     splitMode: undefined
   };
 }
@@ -732,18 +754,23 @@ function promoItemHtml(promo, item, itemIndex) {
   if (item.type === "empanada" || item.type === "adicional") {
     const allowed = allowedProducts(item, item.type);
     const requiredQuantity = promoItemQuantity(item);
-    const chosen = Object.values(selection.empanadas).reduce((sum, value) => sum + safeQuantity(value, 0), 0);
+    const chosen = promoProductTotal(selection);
+    const remaining = Math.max(0, requiredQuantity - chosen);
     const label = item.type === "adicional" ? "adicionales" : "empanadas";
     return `
       <section class="promo-section">
         <h3>${escapeHtml(requiredQuantity)} ${label} <small>${chosen}/${requiredQuantity}</small></h3>
         <div class="quantity-list">
-          ${allowed.map(product => `
-            <div class="quantity-row">
-              <span>${escapeHtml(product.name)}</span>
-              <input data-promo-product="${escapeHtml(product.id)}" data-promo-item="${itemIndex}" type="number" min="0" max="${requiredQuantity}" value="${selection.empanadas[product.id] || 0}">
-            </div>
-          `).join("")}
+          ${allowed.map(product => {
+            const current = safeQuantity(selection.empanadas[product.id], 0);
+            const maxForProduct = current + remaining;
+            return `
+              <div class="quantity-row">
+                <span>${escapeHtml(product.name)}</span>
+                <input data-promo-product="${escapeHtml(product.id)}" data-promo-item="${itemIndex}" type="number" min="0" max="${maxForProduct}" value="${current}" ${maxForProduct === 0 ? "disabled" : ""}>
+              </div>
+            `;
+          }).join("")}
         </div>
       </section>
     `;
@@ -798,8 +825,7 @@ function promoReady(promo) {
   return (promo.items || []).every((item, index) => {
     const selection = state.promoBuilder.selections[index];
     if (item.type === "empanada" || item.type === "adicional") {
-      const chosen = Object.values(selection.empanadas).reduce((sum, value) => sum + safeQuantity(value, 0), 0);
-      return chosen === promoItemQuantity(item);
+      return promoProductTotal(selection) === promoItemQuantity(item);
     }
     return selection.pizzas.every(pizza => {
       const pizzaSelection = Array.isArray(pizza) ? { splitMode: item.splitMode || "", parts: pizza } : pizza;
@@ -1043,7 +1069,7 @@ function categoryNameForDraft(categoryId) {
 
 function renderPromoEditor() {
   nodes.promoEditor.innerHTML = `<div class="editor-list">${state.draft.promotions.map((promo, promoIndex) => `
-    <details class="promo-config-card${state.validationErrors.has(validationKey("promo", promoIndex, "items")) ? " invalid-field" : ""}" data-promo-config>
+    <details class="promo-config-card${state.validationErrors.has(validationKey("promo", promoIndex, "items")) ? " invalid-field" : ""}" data-promo-config data-promo-id="${escapeHtml(promo.id)}" ${state.openPromoConfigId === promo.id ? "open" : ""}>
       <summary class="promo-config-summary">
         <span>
           <strong>${escapeHtml(promo.name || "Promocion sin nombre")} *</strong>
@@ -1079,6 +1105,7 @@ function promoConfigItemHtml(promoIndex, itemIndex, item) {
   const products = state.draft.products.filter(product => product.category === item.type);
   const allowedCount = (item.allowedProductIds || []).length;
   const itemHasError = ["type", "quantity", "products", "sizeId", "splitModes"].some(field => state.validationErrors.has(validationKey("promo", promoIndex, "item", itemIndex, field)));
+  const splitModes = normalizeSplitModesForSize(item.splitModes, item.sizeId);
   return `
     <div class="promo-config-item${itemHasError ? " invalid-field" : ""}">
       <strong>Item ${itemIndex + 1}: ${item.type === "pizza" ? "Pizza" : item.type === "adicional" ? "Adicionales" : "Empanadas"} *</strong>
@@ -1101,9 +1128,9 @@ function promoConfigItemHtml(promoIndex, itemIndex, item) {
           </label>
           <label class="${invalidClass("promo", promoIndex, "item", itemIndex, "splitModes")}">Divisiones permitidas *
             <select data-promo-split-modes data-promo-index="${promoIndex}" data-item-index="${itemIndex}" multiple size="3">
-              <option value="" ${(item.splitModes || [""]).includes("") ? "selected" : ""}>Enteras</option>
-              <option value="halves" ${(item.splitModes || []).includes("halves") ? "selected" : ""}>Mitades</option>
-              <option value="quarters" ${(item.splitModes || []).includes("quarters") ? "selected" : ""}>Cuartos</option>
+              <option value="" ${splitModes.includes("") ? "selected" : ""}>Enteras</option>
+              <option value="halves" ${splitModes.includes("halves") ? "selected" : ""}>Mitades</option>
+              ${item.sizeId === "xl" ? `<option value="quarters" ${splitModes.includes("quarters") ? "selected" : ""}>Cuartos</option>` : ""}
             </select>
           </label>
         </div>
@@ -1162,13 +1189,19 @@ document.addEventListener("click", event => {
   if (target.dataset.removeCategory) { state.draft.productCategories.splice(Number(target.dataset.removeCategory), 1); renderCategoryEditor(); renderProductEditor(); }
   if (target.dataset.removeSize) { state.draft.pizzaSizes.splice(Number(target.dataset.removeSize), 1); renderSizeEditor(); renderProductEditor(); renderPromoEditor(); }
   if (target.dataset.removeProduct) { state.draft.products.splice(Number(target.dataset.removeProduct), 1); renderProductEditor(); renderPromoEditor(); }
-  if (target.dataset.removePromo) { state.draft.promotions.splice(Number(target.dataset.removePromo), 1); renderPromoEditor(); }
+  if (target.dataset.removePromo) {
+    const removed = state.draft.promotions.splice(Number(target.dataset.removePromo), 1)[0];
+    if (state.openPromoConfigId === removed?.id) state.openPromoConfigId = null;
+    renderPromoEditor();
+  }
   if (target.dataset.removePromoItem) {
+    setOpenPromoFromElement(target);
     state.draft.promotions[Number(target.dataset.promoIndex)].items.splice(Number(target.dataset.removePromoItem), 1);
     renderPromoEditor();
   }
   if (target.dataset.addPromoItem) {
     const type = target.dataset.addPromoItem;
+    setOpenPromoFromElement(target);
     state.draft.promotions[Number(target.dataset.promoIndex)].items.push({
       id: uid("promo-item"),
       type,
@@ -1209,7 +1242,9 @@ document.addEventListener("click", event => {
     renderProductEditor();
   }
   if (target.id === "addPromo") {
-    state.draft.promotions.push({ id: uid("promo"), name: "Nueva promo", price: 0, active: true, items: [] });
+    const id = uid("promo");
+    state.draft.promotions.push({ id, name: "Nueva promo", price: 0, active: true, items: [] });
+    state.openPromoConfigId = id;
     renderPromoEditor();
   }
   if (
@@ -1241,6 +1276,24 @@ function removePromoPizzaPart(target) {
   const selection = Array.isArray(pizza) ? { splitMode: "", parts: pizza } : pizza;
   selection.parts.splice(Number(target.dataset.removePromoPizzaPart), 1);
   state.promoBuilder.selections[itemIndex].pizzas[pizzaIndex] = selection;
+  renderPromoModal();
+}
+
+function updatePromoProductQuantity(input) {
+  const itemIndex = Number(input.dataset.promoItem);
+  const promo = currentPromo();
+  const item = promo?.items?.[itemIndex];
+  const selection = state.promoBuilder?.selections?.[itemIndex];
+  if (!item || !selection) return;
+  const productId = input.dataset.promoProduct;
+  const requiredQuantity = promoItemQuantity(item);
+  const previous = safeQuantity(selection.empanadas[productId], 0);
+  const withoutCurrent = Math.max(0, promoProductTotal(selection) - previous);
+  const allowedForProduct = Math.max(0, requiredQuantity - withoutCurrent);
+  const next = Math.min(safeQuantity(input.value, 0), allowedForProduct);
+  if (next > 0) selection.empanadas[productId] = next;
+  else delete selection.empanadas[productId];
+  input.value = next;
   renderPromoModal();
 }
 
@@ -1277,22 +1330,26 @@ document.addEventListener("input", event => {
     changedDraft = true;
   }
   if (input.dataset.promoField) {
+    setOpenPromoFromElement(input);
     const promo = state.draft.promotions[Number(input.dataset.promoIndex)];
     const field = input.dataset.promoField;
     promo[field] = field === "active" ? input.checked : field === "price" ? Number(input.value) : input.value;
     changedDraft = true;
   }
   if (input.dataset.promoItemField) {
+    setOpenPromoFromElement(input);
     const item = state.draft.promotions[Number(input.dataset.promoIndex)].items[Number(input.dataset.itemIndex)];
     const field = input.dataset.promoItemField;
     item[field] = field === "quantity" ? Number(input.value) : input.value || null;
     if (field === "type") {
       item.allowedProductIds = [];
+      item.splitModes = normalizeSplitModesForSize(item.splitModes, item.sizeId);
       renderPromoEditor();
     }
     changedDraft = true;
   }
   if (input.dataset.promoAllowed) {
+    setOpenPromoFromElement(input);
     const item = state.draft.promotions[Number(input.dataset.promoIndex)].items[Number(input.dataset.itemIndex)];
     item.allowedProductIds ||= [];
     if (input.checked && !item.allowedProductIds.includes(input.dataset.promoAllowed)) item.allowedProductIds.push(input.dataset.promoAllowed);
@@ -1300,9 +1357,7 @@ document.addEventListener("input", event => {
     changedDraft = true;
   }
   if (input.dataset.promoProduct) {
-    const selection = state.promoBuilder.selections[Number(input.dataset.promoItem)];
-    selection.empanadas[input.dataset.promoProduct] = Number(input.value) || 0;
-    renderPromoModal();
+    updatePromoProductQuantity(input);
   }
   if (changedDraft) markDirty();
 });
@@ -1320,8 +1375,9 @@ document.addEventListener("change", event => {
     return;
   }
   if (input.dataset.promoSplitModes !== undefined) {
+    setOpenPromoFromElement(input);
     const item = state.draft.promotions[Number(input.dataset.promoIndex)].items[Number(input.dataset.itemIndex)];
-    item.splitModes = Array.from(input.selectedOptions).map(option => option.value);
+    item.splitModes = normalizeSplitModesForSize(Array.from(input.selectedOptions).map(option => option.value), item.sizeId);
     if (!item.splitModes.length) item.splitModes = [""];
     markDirty();
     renderPromoEditor();
@@ -1335,12 +1391,16 @@ document.addEventListener("change", event => {
     return;
   }
   if (input.dataset.promoItemField) {
+    setOpenPromoFromElement(input);
     const item = state.draft.promotions[Number(input.dataset.promoIndex)].items[Number(input.dataset.itemIndex)];
     const field = input.dataset.promoItemField;
     item[field] = field === "quantity" ? Number(input.value) : input.value || null;
     if (field === "type") {
       item.allowedProductIds = [];
       item.splitModes ||= [""];
+    }
+    if (field === "sizeId") {
+      item.splitModes = normalizeSplitModesForSize(item.splitModes, item.sizeId);
     }
     markDirty();
     renderPromoEditor();
@@ -1356,9 +1416,12 @@ document.addEventListener("toggle", event => {
     });
   }
   if (event.target.matches?.("[data-promo-config]") && event.target.open) {
+    state.openPromoConfigId = event.target.dataset.promoId || null;
     $$("[data-promo-config]").forEach(section => {
       if (section !== event.target) section.open = false;
     });
+  } else if (event.target.matches?.("[data-promo-config]") && state.openPromoConfigId === event.target.dataset.promoId) {
+    state.openPromoConfigId = null;
   }
   if (event.target.matches?.("[data-product-type-group]") && event.target.open) {
     $$("[data-product-type-group]").forEach(section => {
