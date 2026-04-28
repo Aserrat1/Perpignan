@@ -66,6 +66,10 @@ const SIZE_ORDER = ["xl", "chica", "mediana"];
 const SPLIT_PARTS = { halves: 2, quarters: 4 };
 const PRODUCT_TYPES = ["pizza", "empanada", "adicional"];
 
+window.addEventListener("error", event => {
+  showToast(event.message || "Error inesperado", "error");
+});
+
 function escapeHtml(value) {
   return String(value ?? "")
     .replace(/&/g, "&amp;")
@@ -85,7 +89,12 @@ function money(value) {
 }
 
 function safeQuantity(value, fallback = 1) {
-  const number = Number(value);
+  let number = fallback;
+  try {
+    number = Number(value);
+  } catch {
+    return fallback;
+  }
   if (!Number.isFinite(number)) return fallback;
   return Math.max(0, Math.floor(number));
 }
@@ -100,7 +109,9 @@ function promoItemQuantity(item) {
 }
 
 function safeArray(count, mapper) {
-  return Array.from({ length: boundedCount(count, 0, 100) }, mapper);
+  const length = boundedCount(count, 0, 100);
+  if (!Number.isSafeInteger(length) || length < 0) return [];
+  return Array.from({ length }, mapper);
 }
 
 function validationKey(...parts) {
@@ -168,7 +179,14 @@ function normalizePromo(promo) {
 
 function normalizePromoItem(item) {
   const splitModes = item.splitModes || (item.splitMode ? [item.splitMode] : [""]);
-  return { ...item, quantity: promoItemQuantity(item), splitModes, splitMode: undefined };
+  return {
+    ...item,
+    type: PRODUCT_TYPES.includes(item.type) ? item.type : "empanada",
+    quantity: promoItemQuantity(item),
+    allowedProductIds: Array.isArray(item.allowedProductIds) ? item.allowedProductIds : [],
+    splitModes: Array.isArray(splitModes) && splitModes.length ? splitModes : [""],
+    splitMode: undefined
+  };
 }
 
 function categoriesFor(type, source = state.config) {
@@ -630,7 +648,7 @@ function openPromoModal(promoId) {
       selections: (promo.items || []).map(item => ({
         itemId: item.id,
         empanadas: {},
-        pizzas: safeArray(promoItemQuantity(item), () => defaultPromoPizzaSelection(item))
+        pizzas: []
       }))
     };
     nodes.promoModal.hidden = false;
@@ -694,7 +712,10 @@ function promoItemHtml(promo, item, itemIndex) {
   return `
     <section class="promo-section">
       <h3>${escapeHtml(promoItemQuantity(item))} pizza ${escapeHtml(state.config.pizzaSizes.find(size => size.id === item.sizeId)?.name || "")}</h3>
-      ${selection.pizzas.map((pizzaSelection, pizzaIndex) => promoPizzaHtml(item, itemIndex, pizzaIndex, pizzaSelection)).join("")}
+      ${safeArray(promoItemQuantity(item), (_, pizzaIndex) => {
+        if (!selection.pizzas[pizzaIndex]) selection.pizzas[pizzaIndex] = defaultPromoPizzaSelection(item);
+        return promoPizzaHtml(item, itemIndex, pizzaIndex, selection.pizzas[pizzaIndex]);
+      }).join("")}
     </section>
   `;
 }

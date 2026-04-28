@@ -201,28 +201,41 @@
           "splitModes": [
             ""
           ]
-        },
+        }
+      ]
+    },
+    {
+      "id": "combo-pizza-6-empanadas",
+      "name": "Pizza mediana + 6 empanadas",
+      "price": 12500,
+      "active": true,
+      "items": [
         {
-          "id": "promo-item-bisrun",
+          "id": "combo-pizza-item",
           "type": "pizza",
           "quantity": 1,
           "allowedProductIds": [
-            "muzza"
+            "muzza",
+            "napo"
           ],
+          "sizeId": "mediana",
+          "splitModes": [
+            "",
+            "halves"
+          ]
+        },
+        {
+          "id": "combo-empanadas-item",
+          "type": "empanada",
+          "quantity": 6,
+          "allowedProductIds": [],
           "sizeId": "mediana",
           "splitModes": [
             ""
           ]
         }
       ]
-    },
-    {
-      "id": "promo-5f681v",
-      "name": "Nueva promo",
-      "price": 0,
-      "active": true,
-      "items": []
     }
   ],
-  "updatedAt": "2026-04-28T10:59:25.437Z"
+  "updatedAt": "2026-04-28T11:45:59.828Z"
 }

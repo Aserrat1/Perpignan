@@ -77,20 +77,54 @@ function ensureDb() {
 
 function readDb() {
   ensureDb();
-  return JSON.parse(fs.readFileSync(DB_PATH, "utf8"));
+  return normalizeDb(JSON.parse(fs.readFileSync(DB_PATH, "utf8")));
 }
 
 function writeDb(data) {
   ensureDb();
-  const normalized = {
+  const normalized = normalizeDb({
     settings: data.settings || {},
     productCategories: Array.isArray(data.productCategories) ? data.productCategories : [],
     pizzaSizes: Array.isArray(data.pizzaSizes) ? data.pizzaSizes : [],
     products: Array.isArray(data.products) ? data.products : [],
     promotions: Array.isArray(data.promotions) ? data.promotions : [],
     updatedAt: new Date().toISOString()
-  };
+  });
   fs.writeFileSync(DB_PATH, JSON.stringify(normalized, null, 2));
+  return normalized;
+}
+
+function safeQuantity(value, fallback = 1) {
+  const number = Number(value);
+  if (!Number.isFinite(number)) return fallback;
+  return Math.min(50, Math.max(1, Math.floor(number)));
+}
+
+function normalizeDb(data) {
+  const normalized = {
+    settings: data.settings || {},
+    productCategories: Array.isArray(data.productCategories) ? data.productCategories : [],
+    pizzaSizes: Array.isArray(data.pizzaSizes) ? data.pizzaSizes : [],
+    products: Array.isArray(data.products) ? data.products : [],
+    promotions: Array.isArray(data.promotions) ? data.promotions : [],
+    updatedAt: data.updatedAt || new Date().toISOString()
+  };
+
+  normalized.promotions = normalized.promotions.map(promo => ({
+    id: promo.id || `promo-${Date.now()}`,
+    name: String(promo.name || "Promo"),
+    price: Number.isFinite(Number(promo.price)) ? Number(promo.price) : 0,
+    active: promo.active !== false,
+    items: Array.isArray(promo.items) ? promo.items.map(item => ({
+      id: item.id || `promo-item-${Date.now()}`,
+      type: ["pizza", "empanada", "adicional"].includes(item.type) ? item.type : "empanada",
+      quantity: safeQuantity(item.quantity, 1),
+      allowedProductIds: Array.isArray(item.allowedProductIds) ? item.allowedProductIds : [],
+      sizeId: item.sizeId || "mediana",
+      splitModes: Array.isArray(item.splitModes) && item.splitModes.length ? item.splitModes : (item.splitMode ? [item.splitMode] : [""])
+    })) : []
+  }));
+
   return normalized;
 }
 
