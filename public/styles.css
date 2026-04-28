@@ -637,7 +637,8 @@ details > :not(summary) {
   overflow: visible;
 }
 
-.promo-config-summary {
+.promo-config-summary,
+.product-config-summary {
   display: grid;
   grid-template-columns: 1fr auto;
   gap: 12px;
@@ -646,20 +647,28 @@ details > :not(summary) {
   background: var(--surface);
 }
 
-.promo-config-summary span {
+.product-config-summary {
+  grid-template-columns: 1fr;
+}
+
+.promo-config-summary span,
+.product-config-summary span {
   display: grid;
   gap: 3px;
   min-width: 0;
 }
 
 .promo-config-summary strong,
-.promo-config-summary small {
+.promo-config-summary small,
+.product-config-summary strong,
+.product-config-summary small {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.promo-config-summary small {
+.promo-config-summary small,
+.product-config-summary small {
   color: var(--muted);
 }
 
@@ -669,11 +678,37 @@ details > :not(summary) {
   white-space: nowrap;
 }
 
-.promo-config-body {
+.promo-config-body,
+.product-config-body {
   display: grid;
   gap: 10px;
   padding: 10px;
   border-top: 1px solid var(--line);
+}
+
+.product-type-group {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+}
+
+.product-type-group > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.product-type-body {
+  display: grid;
+  gap: 10px;
+  padding: 10px;
+  border-top: 1px solid var(--line);
+}
+
+.product-config-card {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface-2);
 }
 
 .promo-config-item {

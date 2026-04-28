@@ -151,9 +151,12 @@ function markDirty() {
 }
 
 function hasUnsavedChanges() {
-  if (state.dirty) return true;
   if (!state.config || !state.draft) return false;
-  return JSON.stringify(state.config) !== JSON.stringify(state.draft);
+  return stableConfigString(state.config) !== stableConfigString(state.draft);
+}
+
+function stableConfigString(config) {
+  return JSON.stringify(normalizeConfig(structuredClone(config)));
 }
 
 function confirmDiscardChanges() {
@@ -961,6 +964,23 @@ function categoryOptions(type, selectedId) {
   return categoriesFor(type, state.draft).map(category => `<option value="${escapeHtml(category.id)}" ${category.id === selectedId ? "selected" : ""}>${escapeHtml(category.name)}</option>`).join("");
 }
 
+function productTypeLabel(type) {
+  if (type === "pizza") return "Pizzas";
+  if (type === "empanada") return "Empanadas";
+  return "Adicionales";
+}
+
+function draftProductsByType(type) {
+  return state.draft.products
+    .map((product, index) => ({ product, index }))
+    .filter(entry => entry.product.category === type)
+    .sort((a, b) => {
+      const catA = state.draft.productCategories.find(category => category.id === a.product.categoryId)?.sort ?? 999;
+      const catB = state.draft.productCategories.find(category => category.id === b.product.categoryId)?.sort ?? 999;
+      return catA - catB || (a.product.sort ?? 999) - (b.product.sort ?? 999) || a.product.name.localeCompare(b.product.name, "es");
+    });
+}
+
 function renderProductEditor() {
   const sizePriceInputs = product => state.draft.pizzaSizes.map(size => `
     <label>${escapeHtml(size.name)}
@@ -968,33 +988,57 @@ function renderProductEditor() {
     </label>
   `).join("");
 
-  nodes.productEditor.innerHTML = `<div class="editor-list">${state.draft.products.map((product, index) => `
-    <div class="editor-card">
-      <div class="editor-row">
-        <label>Nombre<input data-product-field="name" data-index="${index}" value="${escapeHtml(product.name)}"></label>
-        <label>Precio base<input data-product-field="price" data-index="${index}" type="number" min="0" value="${escapeHtml(product.price)}"></label>
+  const productCard = ({ product, index }) => `
+    <details class="product-config-card" data-product-config>
+      <summary class="product-config-summary">
+        <span>
+          <strong>${escapeHtml(product.name || "Producto sin nombre")}</strong>
+          <small>${escapeHtml(money(product.price))} · ${escapeHtml(productTypeLabel(product.category))} · ${escapeHtml(categoryNameForDraft(product.categoryId))}</small>
+        </span>
+      </summary>
+      <div class="product-config-body">
+        <div class="editor-row">
+          <label>Nombre<input data-product-field="name" data-index="${index}" value="${escapeHtml(product.name)}"></label>
+          <label>Precio base<input data-product-field="price" data-index="${index}" type="number" min="0" value="${escapeHtml(product.price)}"></label>
+        </div>
+        <div class="editor-row">
+          <label>Tipo
+            <select data-product-field="category" data-index="${index}">
+              <option value="pizza" ${product.category === "pizza" ? "selected" : ""}>Pizza</option>
+              <option value="empanada" ${product.category === "empanada" ? "selected" : ""}>Empanada</option>
+              <option value="adicional" ${product.category === "adicional" ? "selected" : ""}>Adicional</option>
+            </select>
+          </label>
+          <label>Categoria
+            <select data-product-field="categoryId" data-index="${index}">${categoryOptions(product.category, product.categoryId)}</select>
+          </label>
+        </div>
+        <div class="editor-row">
+          <label>Orden<input data-product-field="sort" data-index="${index}" type="number" value="${escapeHtml(product.sort ?? 0)}"></label>
+          <label class="toggle-row"><input data-product-field="active" data-index="${index}" type="checkbox" ${product.active ? "checked" : ""}> Activo</label>
+        </div>
+        ${product.category === "pizza" ? `<div class="size-price-grid">${sizePriceInputs(product).replaceAll("__INDEX__", String(index))}</div>` : ""}
+        <label>Descripcion<textarea data-product-field="description" data-index="${index}">${escapeHtml(product.description || "")}</textarea></label>
+        <button class="danger" data-remove-product="${index}">Quitar</button>
       </div>
-      <div class="editor-row">
-        <label>Tipo
-          <select data-product-field="category" data-index="${index}">
-            <option value="pizza" ${product.category === "pizza" ? "selected" : ""}>Pizza</option>
-            <option value="empanada" ${product.category === "empanada" ? "selected" : ""}>Empanada</option>
-            <option value="adicional" ${product.category === "adicional" ? "selected" : ""}>Adicional</option>
-          </select>
-        </label>
-        <label>Categoria
-          <select data-product-field="categoryId" data-index="${index}">${categoryOptions(product.category, product.categoryId)}</select>
-        </label>
-      </div>
-      <div class="editor-row">
-        <label>Orden<input data-product-field="sort" data-index="${index}" type="number" value="${escapeHtml(product.sort ?? 0)}"></label>
-        <label class="toggle-row"><input data-product-field="active" data-index="${index}" type="checkbox" ${product.active ? "checked" : ""}> Activo</label>
-      </div>
-      ${product.category === "pizza" ? `<div class="size-price-grid">${sizePriceInputs(product).replaceAll("__INDEX__", String(index))}</div>` : ""}
-      <label>Descripcion<textarea data-product-field="description" data-index="${index}">${escapeHtml(product.description || "")}</textarea></label>
-      <button class="danger" data-remove-product="${index}">Quitar</button>
-    </div>
-  `).join("")}</div>`;
+    </details>
+  `;
+
+  nodes.productEditor.innerHTML = `<div class="editor-list">${PRODUCT_TYPES.map(type => {
+    const products = draftProductsByType(type);
+    return `
+      <details class="product-type-group" data-product-type-group>
+        <summary>${productTypeLabel(type)} <span>${products.length}</span></summary>
+        <div class="product-type-body">
+          ${products.map(productCard).join("") || `<p class="empty">No hay productos.</p>`}
+        </div>
+      </details>
+    `;
+  }).join("")}</div>`;
+}
+
+function categoryNameForDraft(categoryId) {
+  return state.draft.productCategories.find(category => category.id === categoryId)?.name || "Sin categoria";
 }
 
 function renderPromoEditor() {
@@ -1313,6 +1357,16 @@ document.addEventListener("toggle", event => {
   }
   if (event.target.matches?.("[data-promo-config]") && event.target.open) {
     $$("[data-promo-config]").forEach(section => {
+      if (section !== event.target) section.open = false;
+    });
+  }
+  if (event.target.matches?.("[data-product-type-group]") && event.target.open) {
+    $$("[data-product-type-group]").forEach(section => {
+      if (section !== event.target) section.open = false;
+    });
+  }
+  if (event.target.matches?.("[data-product-config]") && event.target.open) {
+    $$("[data-product-config]").forEach(section => {
       if (section !== event.target) section.open = false;
     });
   }
