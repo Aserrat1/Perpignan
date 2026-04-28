@@ -90,8 +90,17 @@ function safeQuantity(value, fallback = 1) {
   return Math.max(0, Math.floor(number));
 }
 
+function boundedCount(value, fallback = 1, max = 100) {
+  const quantity = safeQuantity(value, fallback);
+  return Math.min(max, Math.max(0, quantity));
+}
+
 function promoItemQuantity(item) {
-  return Math.max(1, safeQuantity(item?.quantity, 1));
+  return Math.max(1, boundedCount(item?.quantity, 1, 50));
+}
+
+function safeArray(count, mapper) {
+  return Array.from({ length: boundedCount(count, 0, 100) }, mapper);
 }
 
 function validationKey(...parts) {
@@ -159,7 +168,7 @@ function normalizePromo(promo) {
 
 function normalizePromoItem(item) {
   const splitModes = item.splitModes || (item.splitMode ? [item.splitMode] : [""]);
-  return { ...item, splitModes, splitMode: undefined };
+  return { ...item, quantity: promoItemQuantity(item), splitModes, splitMode: undefined };
 }
 
 function categoriesFor(type, source = state.config) {
@@ -531,7 +540,7 @@ function renderPizzaProgress() {
     <details class="builder-detail">
       <summary>Pizza en ${modeLabel}: ${state.pizzaBuilder.portions.length}/${required} partes elegidas</summary>
       <div class="builder-parts">
-        ${Array.from({ length: required }, (_, index) => {
+        ${safeArray(required, (_, index) => {
           const product = getProduct(state.pizzaBuilder.portions[index]);
           const label = product ? product.name : `Parte ${index + 1} sin elegir`;
           const price = product ? money(pizzaFullPrice(product, size) / required) : "";
@@ -615,16 +624,22 @@ function splitModeLabel(mode) {
 function openPromoModal(promoId) {
   const promo = state.config.promotions.find(item => item.id === promoId);
   if (!promo) return;
-  state.promoBuilder = {
-    promoId,
-    selections: (promo.items || []).map(item => ({
-      itemId: item.id,
-      empanadas: {},
-      pizzas: Array.from({ length: promoItemQuantity(item) }, () => defaultPromoPizzaSelection(item))
-    }))
-  };
-  nodes.promoModal.hidden = false;
-  renderPromoModal();
+  try {
+    state.promoBuilder = {
+      promoId,
+      selections: (promo.items || []).map(item => ({
+        itemId: item.id,
+        empanadas: {},
+        pizzas: safeArray(promoItemQuantity(item), () => defaultPromoPizzaSelection(item))
+      }))
+    };
+    nodes.promoModal.hidden = false;
+    renderPromoModal();
+  } catch (error) {
+    state.promoBuilder = null;
+    nodes.promoModal.hidden = true;
+    showToast("No se pudo abrir la promo. Revisá su configuración.", "error");
+  }
 }
 
 function defaultPromoPizzaSelection(item) {
@@ -632,7 +647,7 @@ function defaultPromoPizzaSelection(item) {
   const mode = (item.splitModes || [""])[0] || "";
   const required = SPLIT_PARTS[mode] || 1;
   const allowed = item.allowedProductIds || [];
-  const parts = allowed.length === 1 ? Array.from({ length: required }, () => allowed[0]) : allowed.length === required ? [...allowed] : [];
+  const parts = allowed.length === 1 ? safeArray(required, () => allowed[0]) : allowed.length === required ? [...allowed] : [];
   return { splitMode: mode, parts };
 }
 
