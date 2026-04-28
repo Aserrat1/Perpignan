@@ -525,7 +525,7 @@ details {
   border: 1px solid var(--line);
   border-radius: 8px;
   background: var(--surface);
-  overflow: hidden;
+  overflow: visible;
 }
 
 summary {
@@ -537,8 +537,9 @@ summary {
 
 .settings-screen > details > summary {
   position: sticky;
-  top: 142px;
+  top: 136px;
   z-index: 4;
+  border-bottom: 1px solid var(--line);
 }
 
 .form-grid,
@@ -564,6 +565,7 @@ summary {
 .editor-card {
   display: grid;
   gap: 8px;
+  min-width: 0;
   border: 1px solid var(--line);
   border-radius: 8px;
   padding: 10px;
@@ -585,11 +587,12 @@ summary {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 8px;
+  min-width: 0;
 }
 
 .size-price-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   gap: 8px;
   padding: 8px;
   border: 1px dashed var(--line);
@@ -606,6 +609,7 @@ summary {
 .promo-config-item {
   display: grid;
   gap: 8px;
+  min-width: 0;
   border: 1px dashed var(--line);
   border-radius: 8px;
   padding: 8px;
@@ -783,5 +787,44 @@ label.invalid-field textarea {
 @media (min-width: 560px) {
   .form-grid {
     grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .app-shell {
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+
+  .settings-actions {
+    top: 70px;
+  }
+
+  .settings-screen > details > summary {
+    top: 132px;
+  }
+
+  .form-grid,
+  .editor-row,
+  .two-buttons {
+    grid-template-columns: 1fr;
+  }
+
+  .editor-list,
+  .form-grid {
+    padding-right: 8px;
+    padding-left: 8px;
+  }
+
+  .settings-actions .primary,
+  .settings-actions .secondary {
+    min-height: 38px;
+    padding: 8px 10px;
+  }
+
+  input,
+  select,
+  textarea {
+    min-width: 0;
   }
 }

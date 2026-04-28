@@ -67,7 +67,20 @@ const SPLIT_PARTS = { halves: 2, quarters: 4 };
 const PRODUCT_TYPES = ["pizza", "empanada", "adicional"];
 
 window.addEventListener("error", event => {
-  showToast(event.message || "Error inesperado", "error");
+  const location = event.filename ? `${event.filename.split("/").pop()}:${event.lineno}:${event.colno}` : "";
+  console.error("Perpignan error", {
+    message: event.message,
+    filename: event.filename,
+    line: event.lineno,
+    column: event.colno,
+    stack: event.error?.stack
+  });
+  showToast(`${event.message || "Error inesperado"} ${location}`, "error");
+});
+
+window.addEventListener("unhandledrejection", event => {
+  console.error("Perpignan promise error", event.reason);
+  showToast(event.reason?.message || "Error inesperado", "error");
 });
 
 function escapeHtml(value) {

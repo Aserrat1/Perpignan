@@ -179,12 +179,13 @@ function serveStatic(req, res) {
 
 const server = http.createServer(async (req, res) => {
   try {
-    if (req.url === "/api/config" && req.method === "GET") {
+    const requestUrl = new URL(req.url, `http://${req.headers.host}`);
+    if (requestUrl.pathname === "/api/config" && req.method === "GET") {
       sendJson(res, 200, readDb());
       return;
     }
 
-    if (req.url === "/api/config" && req.method === "PUT") {
+    if (requestUrl.pathname === "/api/config" && req.method === "PUT") {
       const body = await readBody(req);
       sendJson(res, 200, writeDb(JSON.parse(body)));
       return;
