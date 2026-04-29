@@ -469,6 +469,10 @@ function applyTheme() {
   document.documentElement.dataset.theme = state.config.settings.theme === "dark" ? "dark" : "light";
 }
 
+function previewDraftTheme() {
+  document.documentElement.dataset.theme = state.draft.settings.theme === "dark" ? "dark" : "light";
+}
+
 function resetPizzaBuilder(sizeId = state.pizzaBuilder.sizeId) {
   state.pizzaBuilder = { sizeId, splitMode: null, portions: [] };
 }
@@ -661,7 +665,7 @@ function productButton(product, type) {
   const price = type === "pizza" && size ? pizzaFullPrice(product, size) : product.price;
   const suffix = type === "pizza" && requiredPizzaParts() ? ` / ${requiredPizzaParts()}` : "";
   return `
-    <button class="product-row" data-add-${type}="${escapeHtml(product.id)}" ${disabled}>
+    <button class="product-row product-row-${type}" data-add-${type}="${escapeHtml(product.id)}" ${disabled}>
       <span>
         <strong>${escapeHtml(product.name)}</strong>
         <small>${escapeHtml(categoryName(product.categoryId))} · ${escapeHtml(product.description || "Sin descripcion")}</small>
@@ -1217,7 +1221,7 @@ document.addEventListener("click", event => {
   if (target.id === "syncButton") loadConfig();
   if (target.id === "cartToggle") { state.cartOpen = !state.cartOpen; renderCart(); }
   if (target.id === "clearCart") { state.cart = []; renderCart(); }
-  if (target.id === "resetDraft") { state.draft = structuredClone(state.config); state.dirty = false; state.validationErrors = new Set(); renderSettings(); showToast("Cambios deshechos"); }
+  if (target.id === "resetDraft") { state.draft = structuredClone(state.config); state.dirty = false; state.validationErrors = new Set(); applyTheme(); renderSettings(); showToast("Cambios deshechos"); }
   if (target.id === "saveConfig") saveConfig();
   if (target.id === "closePromoModal") closePromoModal();
   if (target.id === "addPromoToCart") addCurrentPromoToCart();
@@ -1367,6 +1371,17 @@ document.addEventListener("change", event => {
   if (input.id === "sortMode") {
     state.sortMode = input.value;
     renderCalculator();
+    return;
+  }
+  if (input.id === "settingTheme") {
+    state.draft.settings.theme = input.checked ? "dark" : "light";
+    previewDraftTheme();
+    markDirty();
+    return;
+  }
+  if (input.id === "settingPizzaNotes") {
+    state.draft.settings.allowPizzaNotes = input.checked;
+    markDirty();
     return;
   }
   if (input.id === "settingDefaultSort") {

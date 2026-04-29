@@ -6,21 +6,25 @@
     <meta name="theme-color" content="#b42318">
     <title>Perpignan</title>
     <link rel="manifest" href="/manifest.webmanifest">
-    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/styles.css?v=visual-local-2">
   </head>
   <body>
     <div class="app-shell">
       <header class="topbar">
         <button class="icon-button" id="backButton" aria-label="Volver" hidden>‹</button>
-        <div>
+        <div class="topbar-title">
           <p class="eyebrow" id="appMode">Menu</p>
           <h1 id="businessName">Perpignan</h1>
         </div>
         <button class="icon-button" id="syncButton" aria-label="Actualizar datos">↻</button>
+        <img src="/assets/logo.png" alt="Perpignan" class="topbar-logo">
       </header>
 
       <main>
         <section class="home-screen" id="homeScreen">
+          <div class="home-brand">
+            <p class="home-slogan">Pizzas XL abundantes y empanadas premium, hechas con masa del d&iacute;a y sabores para compartir.</p>
+          </div>
           <button class="choice-button" data-screen="calculator">
             <span>Calcular</span>
             <small>Armar pedido y ver total</small>
@@ -56,7 +60,7 @@
           <section class="tab-panel active" id="pizzaPanel">
             <div class="pizza-controls">
               <div>
-                <label>Tamano</label>
+                <label>Tama&ntilde;o</label>
                 <div class="option-grid size-options" id="pizzaSizeOptions"></div>
               </div>
               <div>
