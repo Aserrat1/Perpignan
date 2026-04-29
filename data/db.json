@@ -9,6 +9,30 @@
   },
   "productCategories": [
     {
+      "id": "adicional-extras",
+      "type": "adicional",
+      "name": "Extras",
+      "sort": 1
+    },
+    {
+      "id": "adicional-bebidas",
+      "type": "adicional",
+      "name": "Bebidas",
+      "sort": 2
+    },
+    {
+      "id": "adicional-milanesas",
+      "type": "adicional",
+      "name": "Milanesas",
+      "sort": 3
+    },
+    {
+      "id": "adicional-pedido-fuera-de-radio",
+      "type": "adicional",
+      "name": "Pedido fuera de radio",
+      "sort": 4
+    },
+    {
       "id": "empanada-clasica",
       "type": "empanada",
       "name": "Clásica",
@@ -31,18 +55,6 @@
       "type": "pizza",
       "name": "Exclusiva",
       "sort": 2
-    },
-    {
-      "id": "adicional-bebidas",
-      "type": "adicional",
-      "name": "Bebidas",
-      "sort": 1
-    },
-    {
-      "id": "adicional-otros",
-      "type": "adicional",
-      "name": "Otros",
-      "sort": 2
     }
   ],
   "pizzaSizes": [
@@ -64,15 +76,676 @@
   ],
   "products": [
     {
+      "id": "adicional-pedido-fuera-de-radio-cerca",
+      "category": "adicional",
+      "categoryId": "adicional-pedido-fuera-de-radio",
+      "sort": 1,
+      "name": "Cerca",
+      "description": "Sin descripcion",
+      "price": 1500,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "adicional-extras-faina",
+      "category": "adicional",
+      "categoryId": "adicional-extras",
+      "sort": 1,
+      "name": "Faina",
+      "description": "Sin descripcion",
+      "price": 1000,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "postre-semana",
+      "category": "adicional",
+      "categoryId": "adicional-otros",
+      "sort": 1,
+      "name": "Postre semanal",
+      "description": "Articulo especial configurable.",
+      "price": 3000,
+      "active": false,
+      "sizePrices": {}
+    },
+    {
+      "id": "adicional-milanesas-sola",
+      "category": "adicional",
+      "categoryId": "adicional-milanesas",
+      "sort": 1,
+      "name": "Sola",
+      "description": "Sin descripcion",
+      "price": 14900,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "coca-15",
+      "category": "adicional",
+      "categoryId": "adicional-bebidas",
+      "sort": 2,
+      "name": "Gaseosa 1,5L",
+      "description": "Bebida configurable.",
+      "price": 6500,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "adicional-bebidas-gaseosa-2-25l",
+      "category": "adicional",
+      "categoryId": "adicional-bebidas",
+      "sort": 2,
+      "name": "Gaseosa 2,25L",
+      "description": "Sin descripcion",
+      "price": 8000,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "adicional-pedido-fuera-de-radio-medio",
+      "category": "adicional",
+      "categoryId": "adicional-pedido-fuera-de-radio",
+      "sort": 2,
+      "name": "Medio",
+      "description": "Sin descripcion",
+      "price": 2000,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "adicional-milanesas-napolitana",
+      "category": "adicional",
+      "categoryId": "adicional-milanesas",
+      "sort": 2,
+      "name": "Napolitana",
+      "description": "Sin descripcion",
+      "price": 16900,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "adicional-bebidas-gaseosa-600cc",
+      "category": "adicional",
+      "categoryId": "adicional-bebidas",
+      "sort": 3,
+      "name": "Gaseosa 600cc",
+      "description": "Sin descripcion",
+      "price": 3500,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "adicional-milanesas-jamon-y-muzzarella",
+      "category": "adicional",
+      "categoryId": "adicional-milanesas",
+      "sort": 3,
+      "name": "Jamon y muzzarella",
+      "description": "Sin descripcion",
+      "price": 16900,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "adicional-pedido-fuera-de-radio-lejos",
+      "category": "adicional",
+      "categoryId": "adicional-pedido-fuera-de-radio",
+      "sort": 3,
+      "name": "Lejos",
+      "description": "Sin descripcion",
+      "price": 2500,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "adicional-milanesas-fugazzeta",
+      "category": "adicional",
+      "categoryId": "adicional-milanesas",
+      "sort": 4,
+      "name": "Fugazzeta",
+      "description": "Sin descripcion",
+      "price": 16900,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "adicional-bebidas-gaseosa-lata",
+      "category": "adicional",
+      "categoryId": "adicional-bebidas",
+      "sort": 4,
+      "name": "Gaseosa lata",
+      "description": "Sin descripcion",
+      "price": 3000,
+      "active": false,
+      "sizePrices": {}
+    },
+    {
+      "id": "adicional-milanesas-barbacoa",
+      "category": "adicional",
+      "categoryId": "adicional-milanesas",
+      "sort": 5,
+      "name": "Barbacoa",
+      "description": "Sin descripcion",
+      "price": 18500,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "adicional-bebidas-schneider-lata",
+      "category": "adicional",
+      "categoryId": "adicional-bebidas",
+      "sort": 5,
+      "name": "Schneider lata",
+      "description": "Sin descripcion",
+      "price": 3500,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "adicional-bebidas-heineken-lata",
+      "category": "adicional",
+      "categoryId": "adicional-bebidas",
+      "sort": 6,
+      "name": "Heineken lata",
+      "description": "Sin descripcion",
+      "price": 5000,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "adicional-milanesas-tomate-y-lechuga",
+      "category": "adicional",
+      "categoryId": "adicional-milanesas",
+      "sort": 6,
+      "name": "Tomate y lechuga",
+      "description": "Sin descripcion",
+      "price": 16900,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "adicional-bebidas-andes-lata",
+      "category": "adicional",
+      "categoryId": "adicional-bebidas",
+      "sort": 7,
+      "name": "Andes lata",
+      "description": "Sin descripcion",
+      "price": 4500,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "adicional-milanesas-completo",
+      "category": "adicional",
+      "categoryId": "adicional-milanesas",
+      "sort": 7,
+      "name": "Completo",
+      "description": "Sin descripcion",
+      "price": 18000,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "adicional-bebidas-heineken-1l",
+      "category": "adicional",
+      "categoryId": "adicional-bebidas",
+      "sort": 8,
+      "name": "Heineken 1L",
+      "description": "Sin descripcion",
+      "price": 8500,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "adicional-milanesas-jamon-crudo",
+      "category": "adicional",
+      "categoryId": "adicional-milanesas",
+      "sort": 8,
+      "name": "Jamon crudo",
+      "description": "Sin descripcion",
+      "price": 17000,
+      "active": false,
+      "sizePrices": {}
+    },
+    {
+      "id": "adicional-bebidas-agua",
+      "category": "adicional",
+      "categoryId": "adicional-bebidas",
+      "sort": 9,
+      "name": "Agua",
+      "description": "Sin descripcion",
+      "price": 3000,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "empanada-champignones-y-jamon",
+      "category": "empanada",
+      "categoryId": "empanada-premium",
+      "sort": 1,
+      "name": "Champignones y Jamón",
+      "description": "Null",
+      "price": 3300,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "empanada-mendocina",
+      "category": "empanada",
+      "categoryId": "empanada-clasica",
+      "sort": 1,
+      "name": "Mendocina",
+      "description": "Carne picante",
+      "price": 3300,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "empanada-jamon-y-palmitos",
+      "category": "empanada",
+      "categoryId": "empanada-premium",
+      "sort": 2,
+      "name": "Jamón y Palmitos",
+      "description": "Null",
+      "price": 3300,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "empanada-santiaguena",
+      "category": "empanada",
+      "categoryId": "empanada-clasica",
+      "sort": 2,
+      "name": "Santiagueña",
+      "description": "Carne suave",
+      "price": 3300,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "empanada-jamon-y-anana",
+      "category": "empanada",
+      "categoryId": "empanada-premium",
+      "sort": 3,
+      "name": "Jamón y Ananá",
+      "description": "Null",
+      "price": 3300,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "empanada-jamon-y-roquefort",
+      "category": "empanada",
+      "categoryId": "empanada-clasica",
+      "sort": 3,
+      "name": "Jamón y Roquefort",
+      "description": "Null",
+      "price": 3300,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "empanada-carbonara",
+      "category": "empanada",
+      "categoryId": "empanada-premium",
+      "sort": 4,
+      "name": "Carbonara",
+      "description": "Null",
+      "price": 3300,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "empanada-choclo",
+      "category": "empanada",
+      "categoryId": "empanada-clasica",
+      "sort": 4,
+      "name": "Choclo",
+      "description": "Null",
+      "price": 3300,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "empanada-jamon-y-morron",
+      "category": "empanada",
+      "categoryId": "empanada-premium",
+      "sort": 5,
+      "name": "Jamón y Morrón",
+      "description": "Null",
+      "price": 3300,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "empanada-jamon-y-queso",
+      "category": "empanada",
+      "categoryId": "empanada-clasica",
+      "sort": 5,
+      "name": "Jamón y queso",
+      "description": "Null",
+      "price": 3300,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "empanada-jamon-crudo-y-rucula",
+      "category": "empanada",
+      "categoryId": "empanada-premium",
+      "sort": 6,
+      "name": "Jamón Crudo y Rúcula",
+      "description": "Null",
+      "price": 3300,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "empanada-pollo",
+      "category": "empanada",
+      "categoryId": "empanada-clasica",
+      "sort": 6,
+      "name": "Pollo",
+      "description": "Null",
+      "price": 3300,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "empanada-pollo-picante",
+      "category": "empanada",
+      "categoryId": "empanada-clasica",
+      "sort": 7,
+      "name": "Pollo picante",
+      "description": "Null",
+      "price": 3300,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "empanada-puerros",
+      "category": "empanada",
+      "categoryId": "empanada-premium",
+      "sort": 7,
+      "name": "Puerros",
+      "description": "Null",
+      "price": 3300,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "empanada-tomates-secos-y-rucula",
+      "category": "empanada",
+      "categoryId": "empanada-premium",
+      "sort": 8,
+      "name": "Tomates secos y Rúcula",
+      "description": "Null",
+      "price": 3300,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "empanada-calabaza",
+      "category": "empanada",
+      "categoryId": "empanada-premium",
+      "sort": 9,
+      "name": "Calabaza",
+      "description": "Null",
+      "price": 3300,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "empanada-jamon-y-provolone",
+      "category": "empanada",
+      "categoryId": "empanada-premium",
+      "sort": 10,
+      "name": "Jamón y provolone",
+      "description": "Null",
+      "price": 3300,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "empanada-jamon-y-huevo",
+      "category": "empanada",
+      "categoryId": "empanada-premium",
+      "sort": 11,
+      "name": "Jamón y Huevo",
+      "description": "Null",
+      "price": 3300,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "empanada-panceta",
+      "category": "empanada",
+      "categoryId": "empanada-premium",
+      "sort": 12,
+      "name": "Panceta",
+      "description": "Null",
+      "price": 3300,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "empanada-panceta-y-ciruela",
+      "category": "empanada",
+      "categoryId": "empanada-premium",
+      "sort": 13,
+      "name": "Panceta y Ciruela",
+      "description": "Null",
+      "price": 3300,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "empanada-berenjenas",
+      "category": "empanada",
+      "categoryId": "empanada-premium",
+      "sort": 14,
+      "name": "Berenjenas",
+      "description": "Null",
+      "price": 3300,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "empanada-anchoas",
+      "category": "empanada",
+      "categoryId": "empanada-premium",
+      "sort": 15,
+      "name": "Anchoas",
+      "description": "Null",
+      "price": 3300,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "empanada-barbacue",
+      "category": "empanada",
+      "categoryId": "empanada-premium",
+      "sort": 16,
+      "name": "Barbacue",
+      "description": "Null",
+      "price": 3300,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "empanada-napolitana",
+      "category": "empanada",
+      "categoryId": "empanada-premium",
+      "sort": 17,
+      "name": "Napolitana",
+      "description": "Null",
+      "price": 3300,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "empanada-4-quesos",
+      "category": "empanada",
+      "categoryId": "empanada-premium",
+      "sort": 18,
+      "name": "4 Quesos",
+      "description": "Null",
+      "price": 3300,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "empanada-caprese",
+      "category": "empanada",
+      "categoryId": "empanada-premium",
+      "sort": 19,
+      "name": "Caprese",
+      "description": "Null",
+      "price": 3300,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "empanada-queso-y-cebolla",
+      "category": "empanada",
+      "categoryId": "empanada-premium",
+      "sort": 20,
+      "name": "Queso y Cebolla",
+      "description": "Null",
+      "price": 3300,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "empanada-verdura",
+      "category": "empanada",
+      "categoryId": "empanada-premium",
+      "sort": 21,
+      "name": "Verdura",
+      "description": "Null",
+      "price": 3300,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "empanada-perpignan",
+      "category": "empanada",
+      "categoryId": "empanada-premium",
+      "sort": 22,
+      "name": "Perpignan",
+      "description": "Null",
+      "price": 3300,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "empanada-mexicana",
+      "category": "empanada",
+      "categoryId": "empanada-premium",
+      "sort": 23,
+      "name": "Mexicana",
+      "description": "Null",
+      "price": 3300,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "empanada-richie",
+      "category": "empanada",
+      "categoryId": "empanada-premium",
+      "sort": 24,
+      "name": "Richie",
+      "description": "Null",
+      "price": 3300,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "empanada-mediterranea",
+      "category": "empanada",
+      "categoryId": "empanada-premium",
+      "sort": 25,
+      "name": "Mediterranea",
+      "description": "Null",
+      "price": 3300,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "empanada-calabresa",
+      "category": "empanada",
+      "categoryId": "empanada-premium",
+      "sort": 26,
+      "name": "Calabresa",
+      "description": "Null",
+      "price": 3300,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "empanada-arlequine",
+      "category": "empanada",
+      "categoryId": "empanada-premium",
+      "sort": 27,
+      "name": "Arlequine",
+      "description": "Null",
+      "price": 3300,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "empanada-creme",
+      "category": "empanada",
+      "categoryId": "empanada-premium",
+      "sort": 28,
+      "name": "Creme",
+      "description": "Null",
+      "price": 3300,
+      "active": true,
+      "sizePrices": {}
+    },
+    {
+      "id": "pizza-arlequine",
+      "category": "pizza",
+      "categoryId": "pizza-exclusiva",
+      "sort": 1,
+      "name": "Arlequine",
+      "description": "tomate triturado, mozzarella, jamón en rollitos, huevo duro, morrón picado, ajíes en vinagre, perejil",
+      "price": 28000,
+      "active": true,
+      "sizePrices": {
+        "xl": 34900,
+        "mediana": 28000,
+        "chica": 21400
+      }
+    },
+    {
       "id": "pizza-mozzarella",
       "category": "pizza",
       "categoryId": "pizza-tradicional",
       "sort": 1,
       "name": "Mozzarella",
       "description": "tomate triturado, mozzarella",
-      "price": 8400,
+      "price": 21000,
       "active": true,
-      "sizePrices": {}
+      "sizePrices": {
+        "xl": 26000,
+        "mediana": 21000,
+        "chica": 17000
+      }
+    },
+    {
+      "id": "pizza-cheddar",
+      "category": "pizza",
+      "categoryId": "pizza-exclusiva",
+      "sort": 2,
+      "name": "Cheddar",
+      "description": "tomate triturado, mozzarella, queso cheddar, champignon, pollo",
+      "price": 28000,
+      "active": true,
+      "sizePrices": {
+        "xl": 34900,
+        "mediana": 28000,
+        "chica": 21400
+      }
     },
     {
       "id": "pizza-mozzarella-al-pesto",
@@ -81,9 +754,28 @@
       "sort": 2,
       "name": "Mozzarella al Pesto",
       "description": "tomate triturado, mozzarella, pesto",
-      "price": 8620,
+      "price": 25000,
       "active": true,
-      "sizePrices": {}
+      "sizePrices": {
+        "xl": 31000,
+        "mediana": 25000,
+        "chica": 18600
+      }
+    },
+    {
+      "id": "pizza-francesa",
+      "category": "pizza",
+      "categoryId": "pizza-exclusiva",
+      "sort": 3,
+      "name": "Francesa",
+      "description": "tomate triturado, mozzarella, tomate en rodajas, morrón picado, huevo duro, jamón en rollitos, papas bastón, barbacoa",
+      "price": 29000,
+      "active": true,
+      "sizePrices": {
+        "xl": 34900,
+        "mediana": 29000,
+        "chica": 20900
+      }
     },
     {
       "id": "pizza-mozzarrella-dimare",
@@ -92,9 +784,13 @@
       "sort": 3,
       "name": "Mozzarrella Dimare",
       "description": "tomate triturado, mozzarrella, anchoas, perejil",
-      "price": 8840,
+      "price": 27000,
       "active": true,
-      "sizePrices": {}
+      "sizePrices": {
+        "xl": 33500,
+        "mediana": 27000,
+        "chica": 20000
+      }
     },
     {
       "id": "pizza-jamon",
@@ -103,9 +799,28 @@
       "sort": 4,
       "name": "Jamón",
       "description": "tomate triturado, mozzarella, jamón",
-      "price": 9060,
+      "price": 25000,
       "active": true,
-      "sizePrices": {}
+      "sizePrices": {
+        "xl": 31300,
+        "mediana": 25000,
+        "chica": 17000
+      }
+    },
+    {
+      "id": "pizza-jamon-crudo-y-rucula",
+      "category": "pizza",
+      "categoryId": "pizza-exclusiva",
+      "sort": 4,
+      "name": "Jamón Crudo y Rúcula",
+      "description": "tomate triturado, mozzarella, jamón crudo, rúcula, oliva, parmesano",
+      "price": 29000,
+      "active": true,
+      "sizePrices": {
+        "xl": 35000,
+        "mediana": 29000,
+        "chica": 18400
+      }
     },
     {
       "id": "pizza-jamon-y-huevo",
@@ -114,9 +829,28 @@
       "sort": 5,
       "name": "Jamón y Huevo",
       "description": "tomate triturado, mozzarella, jamón, huevo",
-      "price": 9280,
+      "price": 27000,
       "active": true,
-      "sizePrices": {}
+      "sizePrices": {
+        "xl": 33000,
+        "mediana": 27000,
+        "chica": 21000
+      }
+    },
+    {
+      "id": "pizza-super-napoli",
+      "category": "pizza",
+      "categoryId": "pizza-exclusiva",
+      "sort": 5,
+      "name": "Super Napoli",
+      "description": "tomate triturado, mozzarella, jamón, tomate en rodajas, morrón picado, provolone, ajo, perejil",
+      "price": 29000,
+      "active": true,
+      "sizePrices": {
+        "xl": 35000,
+        "mediana": 29000,
+        "chica": 21400
+      }
     },
     {
       "id": "pizza-jamon-y-morrones",
@@ -125,9 +859,43 @@
       "sort": 6,
       "name": "Jamón y Morrones",
       "description": "tomate triturado, mozzarella, jamón, morrones",
-      "price": 9500,
+      "price": 27000,
       "active": true,
-      "sizePrices": {}
+      "sizePrices": {
+        "xl": 33000,
+        "mediana": 27000,
+        "chica": 21000
+      }
+    },
+    {
+      "id": "pizza-perpignan",
+      "category": "pizza",
+      "categoryId": "pizza-exclusiva",
+      "sort": 6,
+      "name": "Perpignan",
+      "description": "tomate triturado, mozzarella, tomate en rodajas, jamón en rollitos, morrón picado, palmitos, salsa golf",
+      "price": 29000,
+      "active": true,
+      "sizePrices": {
+        "xl": 35000,
+        "mediana": 29000,
+        "chica": 21400
+      }
+    },
+    {
+      "id": "pizza-barbacue",
+      "category": "pizza",
+      "categoryId": "pizza-exclusiva",
+      "sort": 7,
+      "name": "Barbacue",
+      "description": "Sin descripcion",
+      "price": 27000,
+      "active": true,
+      "sizePrices": {
+        "xl": 33700,
+        "mediana": 27000,
+        "chica": 21400
+      }
     },
     {
       "id": "pizza-jamon-y-palmitos",
@@ -136,9 +904,28 @@
       "sort": 7,
       "name": "Jamón y Palmitos",
       "description": "tomate triturado, mozzarella, jamón, palmitos, salsa golf",
-      "price": 9720,
+      "price": 28000,
       "active": true,
-      "sizePrices": {}
+      "sizePrices": {
+        "xl": 35000,
+        "mediana": 28000,
+        "chica": 21000
+      }
+    },
+    {
+      "id": "pizza-carbonara",
+      "category": "pizza",
+      "categoryId": "pizza-exclusiva",
+      "sort": 8,
+      "name": "Carbonara",
+      "description": "Sin descripcion",
+      "price": 28000,
+      "active": true,
+      "sizePrices": {
+        "xl": 34900,
+        "mediana": 28000,
+        "chica": 21400
+      }
     },
     {
       "id": "pizza-jamon-y-provolone",
@@ -147,9 +934,13 @@
       "sort": 8,
       "name": "Jamón y Provolone",
       "description": "tomate triturado, mozzarella, jamón, provolone, crema de leche",
-      "price": 9940,
+      "price": 27000,
       "active": true,
-      "sizePrices": {}
+      "sizePrices": {
+        "xl": 33000,
+        "mediana": 27000,
+        "chica": 21000
+      }
     },
     {
       "id": "pizza-dimare",
@@ -158,9 +949,28 @@
       "sort": 9,
       "name": "Dimare",
       "description": "tomate triturado, anchoas, perejil",
-      "price": 10160,
+      "price": 25000,
       "active": true,
-      "sizePrices": {}
+      "sizePrices": {
+        "xl": 32500,
+        "mediana": 25000,
+        "chica": 18900
+      }
+    },
+    {
+      "id": "pizza-gran-fugazzeta",
+      "category": "pizza",
+      "categoryId": "pizza-exclusiva",
+      "sort": 9,
+      "name": "Gran Fugazzeta",
+      "description": "Sin descripcion",
+      "price": 28000,
+      "active": true,
+      "sizePrices": {
+        "xl": 33500,
+        "mediana": 28000,
+        "chica": 20000
+      }
     },
     {
       "id": "pizza-fugazza",
@@ -169,9 +979,28 @@
       "sort": 10,
       "name": "Fugazza",
       "description": "cebolla",
-      "price": 8400,
+      "price": 24000,
       "active": true,
-      "sizePrices": {}
+      "sizePrices": {
+        "xl": 31000,
+        "mediana": 24000,
+        "chica": 18900
+      }
+    },
+    {
+      "id": "pizza-saison",
+      "category": "pizza",
+      "categoryId": "pizza-exclusiva",
+      "sort": 10,
+      "name": "Saison",
+      "description": "tomate triturado, mozzarella, cebolla, panceta picada, roquefort",
+      "price": 27000,
+      "active": true,
+      "sizePrices": {
+        "xl": 33000,
+        "mediana": 27000,
+        "chica": 21400
+      }
     },
     {
       "id": "pizza-fugazzeta",
@@ -180,9 +1009,28 @@
       "sort": 11,
       "name": "Fugazzeta",
       "description": "doble mozzarella, cebolla",
-      "price": 8620,
+      "price": 26000,
       "active": true,
-      "sizePrices": {}
+      "sizePrices": {
+        "xl": 32300,
+        "mediana": 26000,
+        "chica": 19400
+      }
+    },
+    {
+      "id": "pizza-pollo-epice",
+      "category": "pizza",
+      "categoryId": "pizza-exclusiva",
+      "sort": 11,
+      "name": "Pollo epicé",
+      "description": "tomate triturado, mozzarella, pollo, verdeo, ají molido, pimienta",
+      "price": 28000,
+      "active": true,
+      "sizePrices": {
+        "xl": 33000,
+        "mediana": 28000,
+        "chica": 20400
+      }
     },
     {
       "id": "pizza-fugazzeta-con-jamon",
@@ -191,9 +1039,28 @@
       "sort": 12,
       "name": "Fugazzeta con jamón",
       "description": "mozzarella, cebolla, jamón",
-      "price": 8840,
+      "price": 27000,
       "active": true,
-      "sizePrices": {}
+      "sizePrices": {
+        "xl": 33000,
+        "mediana": 27000,
+        "chica": 20400
+      }
+    },
+    {
+      "id": "pizza-mediterranea",
+      "category": "pizza",
+      "categoryId": "pizza-exclusiva",
+      "sort": 12,
+      "name": "Mediterránea",
+      "description": "tomate triturado, mozzarella, tomates secos, aceitunas negras, albahaca picada",
+      "price": 28000,
+      "active": true,
+      "sizePrices": {
+        "xl": 35500,
+        "mediana": 28000,
+        "chica": 21400
+      }
     },
     {
       "id": "pizza-hawaiana",
@@ -202,9 +1069,28 @@
       "sort": 13,
       "name": "Hawaiana",
       "description": "tomate triturado, mozzarella, jamón, ananá en rodajas",
-      "price": 9060,
+      "price": 28000,
       "active": true,
-      "sizePrices": {}
+      "sizePrices": {
+        "xl": 34000,
+        "mediana": 28000,
+        "chica": 18000
+      }
+    },
+    {
+      "id": "pizza-tomates-secos-y-rucula",
+      "category": "pizza",
+      "categoryId": "pizza-exclusiva",
+      "sort": 13,
+      "name": "Tomates secos y rúcula",
+      "description": "tomates secos, mozzarella, rúcula, parmesano, oliva",
+      "price": 29000,
+      "active": true,
+      "sizePrices": {
+        "xl": 34000,
+        "mediana": 29000,
+        "chica": 21400
+      }
     },
     {
       "id": "pizza-bacon",
@@ -213,9 +1099,13 @@
       "sort": 14,
       "name": "Bacon",
       "description": "tomate triturado, mozzarella, panceta",
-      "price": 9280,
+      "price": 25000,
       "active": true,
-      "sizePrices": {}
+      "sizePrices": {
+        "xl": 31300,
+        "mediana": 25000,
+        "chica": 20000
+      }
     },
     {
       "id": "pizza-calabresa",
@@ -224,9 +1114,13 @@
       "sort": 15,
       "name": "Calabresa",
       "description": "tomate triturado, mozzarella, longaniza, morrón picado",
-      "price": 9500,
+      "price": 25000,
       "active": true,
-      "sizePrices": {}
+      "sizePrices": {
+        "xl": 31300,
+        "mediana": 25000,
+        "chica": 20000
+      }
     },
     {
       "id": "pizza-palmitos",
@@ -235,9 +1129,13 @@
       "sort": 16,
       "name": "Palmitos",
       "description": "tomate triturado, mozzarella, palmitos, salsa golf",
-      "price": 9720,
+      "price": 26000,
       "active": true,
-      "sizePrices": {}
+      "sizePrices": {
+        "xl": 33500,
+        "mediana": 26000,
+        "chica": 21000
+      }
     },
     {
       "id": "pizza-provolone",
@@ -246,9 +1144,13 @@
       "sort": 17,
       "name": "Provolone",
       "description": "tomate triturado, mozzarella, provolone",
-      "price": 9940,
+      "price": 26000,
       "active": true,
-      "sizePrices": {}
+      "sizePrices": {
+        "xl": 33000,
+        "mediana": 26000,
+        "chica": 21000
+      }
     },
     {
       "id": "pizza-roquefort",
@@ -257,9 +1159,13 @@
       "sort": 18,
       "name": "Roquefort",
       "description": "tomate triturado, mozzarella, roquefort, crema de leche",
-      "price": 10160,
+      "price": 26000,
       "active": true,
-      "sizePrices": {}
+      "sizePrices": {
+        "xl": 33000,
+        "mediana": 26000,
+        "chica": 21000
+      }
     },
     {
       "id": "pizza-napolitana",
@@ -268,9 +1174,13 @@
       "sort": 19,
       "name": "Napolitana",
       "description": "tomate triturado, mozzarella, tomate en rodajas, morrón picado, ajo, perejil",
-      "price": 8400,
+      "price": 25000,
       "active": true,
-      "sizePrices": {}
+      "sizePrices": {
+        "xl": 32500,
+        "mediana": 25000,
+        "chica": 20000
+      }
     },
     {
       "id": "pizza-vegetariana",
@@ -279,9 +1189,13 @@
       "sort": 20,
       "name": "Vegetariana",
       "description": "mozzarella, verdura, huevo duro, crema de leche, parmesano",
-      "price": 8620,
+      "price": 26000,
       "active": true,
-      "sizePrices": {}
+      "sizePrices": {
+        "xl": 33000,
+        "mediana": 26000,
+        "chica": 20200
+      }
     },
     {
       "id": "pizza-capresse",
@@ -290,9 +1204,13 @@
       "sort": 21,
       "name": "Capresse",
       "description": "tomate triturado, mozzarella, tomate en rodajas, hojas de albahaca",
-      "price": 8840,
+      "price": 25000,
       "active": true,
-      "sizePrices": {}
+      "sizePrices": {
+        "xl": 31300,
+        "mediana": 25000,
+        "chica": 20000
+      }
     },
     {
       "id": "pizza-cuatro-quesos",
@@ -301,9 +1219,13 @@
       "sort": 22,
       "name": "Cuatro Quesos",
       "description": "tomate triturado, mozzarella, provolone, roquefort, parmesano",
-      "price": 9060,
+      "price": 28000,
       "active": true,
-      "sizePrices": {}
+      "sizePrices": {
+        "xl": 34700,
+        "mediana": 28000,
+        "chica": 20400
+      }
     },
     {
       "id": "pizza-mexicana",
@@ -312,9 +1234,13 @@
       "sort": 23,
       "name": "Mexicana",
       "description": "tomate triturado, mozzarella, longaniza, ajíes en vinagre, anchoas, ajo",
-      "price": 9280,
+      "price": 29000,
       "active": true,
-      "sizePrices": {}
+      "sizePrices": {
+        "xl": 34000,
+        "mediana": 29000,
+        "chica": 20400
+      }
     },
     {
       "id": "pizza-calabaza",
@@ -328,568 +1254,62 @@
       "sizePrices": {}
     },
     {
-      "id": "pizza-arlequine",
+      "id": "pizza-fugazzeta-al-verdeo",
       "category": "pizza",
-      "categoryId": "pizza-exclusiva",
-      "sort": 1,
-      "name": "Arlequine",
-      "description": "tomate triturado, mozzarella, jamón en rollitos, huevo duro, morrón picado, ajíes en vinagre, perejil",
-      "price": 13480,
+      "categoryId": "pizza-tradicional",
+      "sort": 38,
+      "name": "Fugazzeta al verdeo",
+      "description": "Sin descripcion",
+      "price": 27000,
       "active": true,
-      "sizePrices": {}
+      "sizePrices": {
+        "xl": 31300,
+        "mediana": 27000,
+        "chica": 19400
+      }
     },
     {
-      "id": "pizza-cheddar",
+      "id": "pizza-parissiene",
       "category": "pizza",
-      "categoryId": "pizza-exclusiva",
-      "sort": 2,
-      "name": "Cheddar",
-      "description": "tomate triturado, mozzarella, queso cheddar, champignon, pollo",
-      "price": 13760,
+      "categoryId": "pizza-tradicional",
+      "sort": 39,
+      "name": "parissiene",
+      "description": "Sin descripcion",
+      "price": 27000,
       "active": true,
-      "sizePrices": {}
-    },
-    {
-      "id": "pizza-francesa",
-      "category": "pizza",
-      "categoryId": "pizza-exclusiva",
-      "sort": 3,
-      "name": "Francesa",
-      "description": "tomate triturado, mozzarella, tomate en rodajas, morrón picado, huevo duro, jamón en rollitos, papas bastón, barbacoa",
-      "price": 14040,
-      "active": true,
-      "sizePrices": {}
-    },
-    {
-      "id": "pizza-jamon-crudo-y-rucula",
-      "category": "pizza",
-      "categoryId": "pizza-exclusiva",
-      "sort": 4,
-      "name": "Jamón Crudo y Rúcula",
-      "description": "tomate triturado, mozzarella, jamón crudo, rúcula, oliva, parmesano",
-      "price": 11800,
-      "active": true,
-      "sizePrices": {}
-    },
-    {
-      "id": "pizza-super-napoli",
-      "category": "pizza",
-      "categoryId": "pizza-exclusiva",
-      "sort": 5,
-      "name": "Super Napoli",
-      "description": "tomate triturado, mozzarella, jamón, tomate en rodajas, morrón picado, provolone, ajo, perejil",
-      "price": 12080,
-      "active": true,
-      "sizePrices": {}
-    },
-    {
-      "id": "pizza-perpignan",
-      "category": "pizza",
-      "categoryId": "pizza-exclusiva",
-      "sort": 6,
-      "name": "Perpignan",
-      "description": "tomate triturado, mozzarella, tomate en rodajas, jamón en rollitos, morrón picado, palmitos, salsa golf",
-      "price": 12360,
-      "active": true,
-      "sizePrices": {}
-    },
-    {
-      "id": "pizza-barbacue",
-      "category": "pizza",
-      "categoryId": "pizza-exclusiva",
-      "sort": 7,
-      "name": "Barbacue",
-      "description": "Null",
-      "price": 12640,
-      "active": true,
-      "sizePrices": {}
-    },
-    {
-      "id": "pizza-carbonara",
-      "category": "pizza",
-      "categoryId": "pizza-exclusiva",
-      "sort": 8,
-      "name": "Carbonara",
-      "description": "Null",
-      "price": 12920,
-      "active": true,
-      "sizePrices": {}
-    },
-    {
-      "id": "pizza-gran-fugazzeta",
-      "category": "pizza",
-      "categoryId": "pizza-exclusiva",
-      "sort": 9,
-      "name": "Gran Fugazzeta",
-      "description": "Null",
-      "price": 13200,
-      "active": true,
-      "sizePrices": {}
-    },
-    {
-      "id": "pizza-saison",
-      "category": "pizza",
-      "categoryId": "pizza-exclusiva",
-      "sort": 10,
-      "name": "Saison",
-      "description": "tomate triturado, mozzarella, cebolla, panceta picada, roquefort",
-      "price": 13480,
-      "active": true,
-      "sizePrices": {}
-    },
-    {
-      "id": "pizza-pollo-epice",
-      "category": "pizza",
-      "categoryId": "pizza-exclusiva",
-      "sort": 11,
-      "name": "Pollo epicé",
-      "description": "tomate triturado, mozzarella, pollo, verdeo, ají molido, pimienta",
-      "price": 13760,
-      "active": true,
-      "sizePrices": {}
-    },
-    {
-      "id": "pizza-mediterranea",
-      "category": "pizza",
-      "categoryId": "pizza-exclusiva",
-      "sort": 12,
-      "name": "Mediterránea",
-      "description": "tomate triturado, mozzarella, tomates secos, aceitunas negras, albahaca picada",
-      "price": 14040,
-      "active": true,
-      "sizePrices": {}
-    },
-    {
-      "id": "pizza-tomates-secos-y-rucula",
-      "category": "pizza",
-      "categoryId": "pizza-exclusiva",
-      "sort": 13,
-      "name": "Tomates secos y rúcula",
-      "description": "tomates secos, mozzarella, rúcula, parmesano, oliva",
-      "price": 11800,
-      "active": true,
-      "sizePrices": {}
-    },
-    {
-      "id": "empanada-mendocina",
-      "category": "empanada",
-      "categoryId": "empanada-clasica",
-      "sort": 1,
-      "name": "Mendocina",
-      "description": "Carne picante",
-      "price": 1000,
-      "active": true,
-      "sizePrices": {}
-    },
-    {
-      "id": "empanada-santiaguena",
-      "category": "empanada",
-      "categoryId": "empanada-clasica",
-      "sort": 2,
-      "name": "Santiagueña",
-      "description": "Carne suave",
-      "price": 1050,
-      "active": true,
-      "sizePrices": {}
-    },
-    {
-      "id": "empanada-jamon-y-roquefort",
-      "category": "empanada",
-      "categoryId": "empanada-clasica",
-      "sort": 3,
-      "name": "Jamón y Roquefort",
-      "description": "Null",
-      "price": 1100,
-      "active": true,
-      "sizePrices": {}
-    },
-    {
-      "id": "empanada-choclo",
-      "category": "empanada",
-      "categoryId": "empanada-clasica",
-      "sort": 4,
-      "name": "Choclo",
-      "description": "Null",
-      "price": 1000,
-      "active": true,
-      "sizePrices": {}
-    },
-    {
-      "id": "empanada-jamon-y-queso",
-      "category": "empanada",
-      "categoryId": "empanada-clasica",
-      "sort": 5,
-      "name": "Jamón y queso",
-      "description": "Null",
-      "price": 1050,
-      "active": true,
-      "sizePrices": {}
-    },
-    {
-      "id": "empanada-pollo",
-      "category": "empanada",
-      "categoryId": "empanada-clasica",
-      "sort": 6,
-      "name": "Pollo",
-      "description": "Null",
-      "price": 1100,
-      "active": true,
-      "sizePrices": {}
-    },
-    {
-      "id": "empanada-pollo-picante",
-      "category": "empanada",
-      "categoryId": "empanada-clasica",
-      "sort": 7,
-      "name": "Pollo picante",
-      "description": "Null",
-      "price": 1000,
-      "active": true,
-      "sizePrices": {}
-    },
-    {
-      "id": "empanada-champignones-y-jamon",
-      "category": "empanada",
-      "categoryId": "empanada-premium",
-      "sort": 1,
-      "name": "Champignones y Jamón",
-      "description": "Null",
-      "price": 1400,
-      "active": true,
-      "sizePrices": {}
-    },
-    {
-      "id": "empanada-jamon-y-palmitos",
-      "category": "empanada",
-      "categoryId": "empanada-premium",
-      "sort": 2,
-      "name": "Jamón y Palmitos",
-      "description": "Null",
-      "price": 1250,
-      "active": true,
-      "sizePrices": {}
-    },
-    {
-      "id": "empanada-jamon-y-anana",
-      "category": "empanada",
-      "categoryId": "empanada-premium",
-      "sort": 3,
-      "name": "Jamón y Ananá",
-      "description": "Null",
-      "price": 1300,
-      "active": true,
-      "sizePrices": {}
-    },
-    {
-      "id": "empanada-carbonara",
-      "category": "empanada",
-      "categoryId": "empanada-premium",
-      "sort": 4,
-      "name": "Carbonara",
-      "description": "Null",
-      "price": 1350,
-      "active": true,
-      "sizePrices": {}
-    },
-    {
-      "id": "empanada-jamon-y-morron",
-      "category": "empanada",
-      "categoryId": "empanada-premium",
-      "sort": 5,
-      "name": "Jamón y Morrón",
-      "description": "Null",
-      "price": 1400,
-      "active": true,
-      "sizePrices": {}
-    },
-    {
-      "id": "empanada-jamon-crudo-y-rucula",
-      "category": "empanada",
-      "categoryId": "empanada-premium",
-      "sort": 6,
-      "name": "Jamón Crudo y Rúcula",
-      "description": "Null",
-      "price": 1250,
-      "active": true,
-      "sizePrices": {}
-    },
-    {
-      "id": "empanada-puerros",
-      "category": "empanada",
-      "categoryId": "empanada-premium",
-      "sort": 7,
-      "name": "Puerros",
-      "description": "Null",
-      "price": 1300,
-      "active": true,
-      "sizePrices": {}
-    },
-    {
-      "id": "empanada-tomates-secos-y-rucula",
-      "category": "empanada",
-      "categoryId": "empanada-premium",
-      "sort": 8,
-      "name": "Tomates secos y Rúcula",
-      "description": "Null",
-      "price": 1350,
-      "active": true,
-      "sizePrices": {}
-    },
-    {
-      "id": "empanada-calabaza",
-      "category": "empanada",
-      "categoryId": "empanada-premium",
-      "sort": 9,
-      "name": "Calabaza",
-      "description": "Null",
-      "price": 1400,
-      "active": true,
-      "sizePrices": {}
-    },
-    {
-      "id": "empanada-jamon-y-provolone",
-      "category": "empanada",
-      "categoryId": "empanada-premium",
-      "sort": 10,
-      "name": "Jamón y provolone",
-      "description": "Null",
-      "price": 1250,
-      "active": true,
-      "sizePrices": {}
-    },
-    {
-      "id": "empanada-jamon-y-huevo",
-      "category": "empanada",
-      "categoryId": "empanada-premium",
-      "sort": 11,
-      "name": "Jamón y Huevo",
-      "description": "Null",
-      "price": 1300,
-      "active": true,
-      "sizePrices": {}
-    },
-    {
-      "id": "empanada-panceta",
-      "category": "empanada",
-      "categoryId": "empanada-premium",
-      "sort": 12,
-      "name": "Panceta",
-      "description": "Null",
-      "price": 1350,
-      "active": true,
-      "sizePrices": {}
-    },
-    {
-      "id": "empanada-panceta-y-ciruela",
-      "category": "empanada",
-      "categoryId": "empanada-premium",
-      "sort": 13,
-      "name": "Panceta y Ciruela",
-      "description": "Null",
-      "price": 1400,
-      "active": true,
-      "sizePrices": {}
-    },
-    {
-      "id": "empanada-berenjenas",
-      "category": "empanada",
-      "categoryId": "empanada-premium",
-      "sort": 14,
-      "name": "Berenjenas",
-      "description": "Null",
-      "price": 1250,
-      "active": true,
-      "sizePrices": {}
-    },
-    {
-      "id": "empanada-anchoas",
-      "category": "empanada",
-      "categoryId": "empanada-premium",
-      "sort": 15,
-      "name": "Anchoas",
-      "description": "Null",
-      "price": 1300,
-      "active": true,
-      "sizePrices": {}
-    },
-    {
-      "id": "empanada-barbacue",
-      "category": "empanada",
-      "categoryId": "empanada-premium",
-      "sort": 16,
-      "name": "Barbacue",
-      "description": "Null",
-      "price": 1350,
-      "active": true,
-      "sizePrices": {}
-    },
-    {
-      "id": "empanada-napolitana",
-      "category": "empanada",
-      "categoryId": "empanada-premium",
-      "sort": 17,
-      "name": "Napolitana",
-      "description": "Null",
-      "price": 1400,
-      "active": true,
-      "sizePrices": {}
-    },
-    {
-      "id": "empanada-4-quesos",
-      "category": "empanada",
-      "categoryId": "empanada-premium",
-      "sort": 18,
-      "name": "4 Quesos",
-      "description": "Null",
-      "price": 1250,
-      "active": true,
-      "sizePrices": {}
-    },
-    {
-      "id": "empanada-caprese",
-      "category": "empanada",
-      "categoryId": "empanada-premium",
-      "sort": 19,
-      "name": "Caprese",
-      "description": "Null",
-      "price": 1300,
-      "active": true,
-      "sizePrices": {}
-    },
-    {
-      "id": "empanada-queso-y-cebolla",
-      "category": "empanada",
-      "categoryId": "empanada-premium",
-      "sort": 20,
-      "name": "Queso y Cebolla",
-      "description": "Null",
-      "price": 1350,
-      "active": true,
-      "sizePrices": {}
-    },
-    {
-      "id": "empanada-verdura",
-      "category": "empanada",
-      "categoryId": "empanada-premium",
-      "sort": 21,
-      "name": "Verdura",
-      "description": "Null",
-      "price": 1400,
-      "active": true,
-      "sizePrices": {}
-    },
-    {
-      "id": "empanada-perpignan",
-      "category": "empanada",
-      "categoryId": "empanada-premium",
-      "sort": 22,
-      "name": "Perpignan",
-      "description": "Null",
-      "price": 1250,
-      "active": true,
-      "sizePrices": {}
-    },
-    {
-      "id": "empanada-mexicana",
-      "category": "empanada",
-      "categoryId": "empanada-premium",
-      "sort": 23,
-      "name": "Mexicana",
-      "description": "Null",
-      "price": 1300,
-      "active": true,
-      "sizePrices": {}
-    },
-    {
-      "id": "empanada-richie",
-      "category": "empanada",
-      "categoryId": "empanada-premium",
-      "sort": 24,
-      "name": "Richie",
-      "description": "Null",
-      "price": 1350,
-      "active": true,
-      "sizePrices": {}
-    },
-    {
-      "id": "empanada-mediterranea",
-      "category": "empanada",
-      "categoryId": "empanada-premium",
-      "sort": 25,
-      "name": "Mediterranea",
-      "description": "Null",
-      "price": 1400,
-      "active": true,
-      "sizePrices": {}
-    },
-    {
-      "id": "empanada-calabresa",
-      "category": "empanada",
-      "categoryId": "empanada-premium",
-      "sort": 26,
-      "name": "Calabresa",
-      "description": "Null",
-      "price": 1250,
-      "active": true,
-      "sizePrices": {}
-    },
-    {
-      "id": "empanada-arlequine",
-      "category": "empanada",
-      "categoryId": "empanada-premium",
-      "sort": 27,
-      "name": "Arlequine",
-      "description": "Null",
-      "price": 1300,
-      "active": true,
-      "sizePrices": {}
-    },
-    {
-      "id": "empanada-creme",
-      "category": "empanada",
-      "categoryId": "empanada-premium",
-      "sort": 28,
-      "name": "Creme",
-      "description": "Null",
-      "price": 1350,
-      "active": true,
-      "sizePrices": {}
-    },
-    {
-      "id": "coca-15",
-      "category": "adicional",
-      "categoryId": "adicional-bebidas",
-      "sort": 1,
-      "name": "Gaseosa 1.5L",
-      "description": "Bebida configurable.",
-      "price": 2500,
-      "active": true,
-      "sizePrices": {}
-    },
-    {
-      "id": "postre-semana",
-      "category": "adicional",
-      "categoryId": "adicional-otros",
-      "sort": 1,
-      "name": "Postre semanal",
-      "description": "Articulo especial configurable.",
-      "price": 3000,
-      "active": true,
-      "sizePrices": {}
+      "sizePrices": {
+        "xl": 34000,
+        "mediana": 27000,
+        "chica": 20000
+      }
     }
   ],
   "promotions": [
     {
-      "id": "docena-empanadas",
-      "name": "Docena de empanadas",
-      "price": 9600,
+      "id": "promo-pizza-xl-de-muzzarella",
+      "name": "Pizza XL de muzzarella",
+      "price": 27500,
       "active": true,
       "items": [
         {
-          "id": "docena-empanadas-item",
-          "type": "empanada",
-          "quantity": 12,
-          "allowedProductIds": [],
+          "id": "promo-xl-mozzarella-pizza",
+          "type": "pizza",
+          "quantity": 1,
+          "allowedProductIds": [
+            "pizza-mozzarella"
+          ],
+          "sizeId": "xl",
+          "splitModes": [
+            ""
+          ]
+        },
+        {
+          "id": "pizza-xl-de-muzzarella-faina",
+          "type": "adicional",
+          "quantity": 2,
+          "allowedProductIds": [
+            "adicional-extras-faina"
+          ],
           "sizeId": "mediana",
           "splitModes": [
             ""
@@ -898,30 +1318,91 @@
       ]
     },
     {
-      "id": "combo-pizza-6-empanadas",
-      "name": "Pizza mediana + 6 empanadas",
-      "price": 12500,
-      "active": true,
+      "id": "promo-pizza-xl-muzzarella-o-fugazzeta",
+      "name": "Pizza XL Muzzarella o Fugazzeta",
+      "price": 20000,
+      "active": false,
       "items": [
         {
-          "id": "combo-pizza-item",
+          "id": "promo-xl-mozza-fugazzeta-pizza",
           "type": "pizza",
           "quantity": 1,
           "allowedProductIds": [
             "pizza-mozzarella",
+            "pizza-fugazzeta"
+          ],
+          "sizeId": "xl",
+          "splitModes": [
+            ""
+          ]
+        }
+      ]
+    },
+    {
+      "id": "promo-pizza-xl-cuartos",
+      "name": "Pizza XL Cuartos",
+      "price": 26900,
+      "active": true,
+      "items": [
+        {
+          "id": "promo-xl-cuartos-pizza",
+          "type": "pizza",
+          "quantity": 1,
+          "allowedProductIds": [],
+          "sizeId": "xl",
+          "splitModes": [
+            "quarters"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "promo-pizza-tradicional-muzzarella-o-fugazzeta-o-napolitana",
+      "name": "Pizza tradicional Muzzarella o Fugazzeta o Napolitana",
+      "price": 20000,
+      "active": false,
+      "items": [
+        {
+          "id": "promo-mediana-mozza-fugazzeta-napo-pizza",
+          "type": "pizza",
+          "quantity": 1,
+          "allowedProductIds": [
+            "pizza-mozzarella",
+            "pizza-fugazzeta",
             "pizza-napolitana"
           ],
           "sizeId": "mediana",
           "splitModes": [
-            "",
-            "halves"
+            ""
+          ]
+        }
+      ]
+    },
+    {
+      "id": "promo-pizza-tradicional-de-muzzarella",
+      "name": "Pizza tradicional de muzzarella",
+      "price": 20000,
+      "active": false,
+      "items": [
+        {
+          "id": "promo-mediana-mozzarella-pizza",
+          "type": "pizza",
+          "quantity": 1,
+          "allowedProductIds": [
+            "pizza-mozzarella"
+          ],
+          "sizeId": "mediana",
+          "splitModes": [
+            ""
           ]
         },
         {
-          "id": "combo-empanadas-item",
-          "type": "empanada",
-          "quantity": 6,
-          "allowedProductIds": [],
+          "id": "pizza-tradicional-de-muzzarella-faina",
+          "type": "adicional",
+          "quantity": 2,
+          "allowedProductIds": [
+            "adicional-extras-faina"
+          ],
           "sizeId": "mediana",
           "splitModes": [
             ""
@@ -930,5 +1411,5 @@
       ]
     }
   ],
-  "updatedAt": "2026-04-29T01:06:39.568Z"
+  "updatedAt": "2026-04-29T22:10:12.682Z"
 }
